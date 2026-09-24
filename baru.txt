@@ -1,0 +1,101 @@
+Berikut daftar tabel database yang diekstrak dari seluruh gambar secara berurutan tanpa duplikasi:
+
+* m_alasan_penyesuaian_stok
+* m_customer
+* m_database_version
+* m_dropshipper
+* m_footer_nota_mini_pos
+* m_golongan
+* m_harga_grosir
+* m_header_nota
+* m_header_nota_mini_pos
+* m_item_menu
+* m_jabatan
+* m_jenis_pengeluaran
+* m_kabupaten
+* m_kabupaten2
+* m_kartu
+* m_karyawan
+* m_kecamatan
+* m_label_nota
+* m_lisensi
+* m_menu
+* m_pengguna
+* m_prefix_nota
+* m_produk
+* m_profil
+* m_provinsi
+* m_provinsi2
+* m_role
+* m_role_privilege
+* m_setting_aplikasi
+* m_shift
+* m_supplier
+* t_beli_produk
+* t_gaji_karyawan
+* t_item_beli_produk
+* t_item_jual_produk
+* t_item_pembayaran_hutang_produk
+* t_item_pembayaran_piutang_produk
+* t_item_pengeluaran_biaya
+* t_item_retur_beli_produk
+* t_item_retur_jual_produk
+* t_jual_produk
+* t_kasbon
+* t_logs
+* t_mesin
+* t_pembayaran_hutang_produk
+* t_pembayaran_kasbon
+* t_pembayaran_piutang_produk
+* t_pengeluaran_biaya
+* t_penyesuaian_stok
+* t_retur_beli_produk
+* t_retur_jual_produk
+
+
+
+===============================
+CREATE TABLE m_satuan
+(
+    satuan_id varchar(36),
+    nama_satuan varchar(50)
+);
+
+PCS
+PACK
+KARDUS
+BAL
+LUSIN
+============================
+CREATE TABLE m_produk_satuan
+(
+    produk_satuan_id varchar(36),
+    produk_id varchar(36),
+    satuan_id varchar(36),
+    konversi numeric(10,2),
+    harga_jual numeric(15,2),
+    barcode varchar(50)
+);
+
+============================
+perbaikan struktur tabel
+
+ALTER TABLE m_satuan
+ADD CONSTRAINT pk_m_satuan
+PRIMARY KEY (satuan_id);
+==================
+ALTER TABLE m_produk_satuan
+ADD CONSTRAINT pk_m_produk_satuan
+PRIMARY KEY (produk_satuan_id);
+================
+forgen key
+ALTER TABLE m_produk_satuan
+ADD CONSTRAINT fk_produk_satuan_produk
+FOREIGN KEY (produk_id)
+REFERENCES m_produk(produk_id);
+====================
+ALTER TABLE m_produk_satuan
+ADD CONSTRAINT fk_produk_satuan_satuan
+FOREIGN KEY (satuan_id)
+REFERENCES m_satuan(satuan_id);
+

@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{FFEF9DEE-C608-4160-BAEC-1723185677F6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OpenRetail.Repository.Service</RootNamespace>
+    <AssemblyName>OpenRetail.Repository.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Dapper, Version=1.50.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Dapper.1.50.2\lib\net451\Dapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Dapper.Contrib, Version=1.50.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Dapper.Contrib.1.50.0\lib\net45\Dapper.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Microsoft.Bcl.AsyncInterfaces.6.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1652.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=6.0.8.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\Npgsql.6.0.8\lib\netstandard2.0\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Collections.Immutable.6.0.0\lib\net461\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Diagnostics.DiagnosticSource.6.0.0\lib\net461\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Text.Encodings.Web.6.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Text.Json.6.0.0\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Channels, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Threading.Channels.6.0.0\lib\net461\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\lib\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Lisensi\LisensiRepository.cs" />
+    <Compile Include="Pengaturan\CabangRepository.cs" />
+    <Compile Include="Report\ReportRugiLabaRepository.cs" />
+    <Compile Include="SqlServerTypes\Loader.cs" />
+    <Compile Include="Transaksi\PembayaranHutangProdukWebAPIRepository.cs" />
+    <Compile Include="Transaksi\PembayaranPiutangProdukWebAPIRepository.cs" />
+    <Compile Include="Transaksi\BeliProdukWebAPIRepository.cs" />
+    <Compile Include="Transaksi\JualProdukWebAPIRepository.cs" />
+    <Compile Include="Pengeluaran\GajiKaryawanWebAPIRepository.cs" />
+    <Compile Include="Pengeluaran\KasbonWebAPIRepository.cs" />
+    <Compile Include="Pengeluaran\PembayaranKasbonWebAPIRepository.cs" />
+    <Compile Include="Referensi\AlasanPenyesuaianStokWebAPIRepository.cs" />
+    <Compile Include="Referensi\CustomerWebAPIRepository.cs" />
+    <Compile Include="Referensi\DropshipperWebAPIRepository.cs" />
+    <Compile Include="Referensi\GolonganWebAPIRepository.cs" />
+    <Compile Include="Referensi\JabatanWebAPIRepository.cs" />
+    <Compile Include="Referensi\JenisPengeluaranWebAPIRepository.cs" />
+    <Compile Include="Referensi\KartuWebAPIRepository.cs" />
+    <Compile Include="Referensi\KaryawanWebAPIRepository.cs" />
+    <Compile Include="Pengeluaran\PengeluaranBiayaWebAPIRepository.cs" />
+    <Compile Include="Referensi\PenyesuaianStokWebAPIRepository.cs" />
+    <Compile Include="Referensi\ProdukWebAPIRepository.cs" />
+    <Compile Include="Referensi\AlasanPenyesuaianStokRepository.cs" />
+    <Compile Include="Referensi\SupplierWebAPIRepository.cs" />
+    <Compile Include="Transaksi\BeliProdukRepository.cs" />
+    <Compile Include="Transaksi\CetakNotaDummyRepository.cs" />
+    <Compile Include="Transaksi\CetakNotaRepository.cs" />
+    <Compile Include="Referensi\CustomerRepository.cs" />
+    <Compile Include="DapperContext.cs" />
+    <Compile Include="DatabaseVersionRepository.cs" />
+    <Compile Include="Referensi\DropshipperRepository.cs" />
+    <Compile Include="Transaksi\FooterNotaMiniPosRepository.cs" />
+    <Compile Include="Pengeluaran\GajiKaryawanRepository.cs" />
+    <Compile Include="Referensi\GolonganRepository.cs" />
+    <Compile Include="Referensi\HargaGrosirRepository.cs" />
+    <Compile Include="Transaksi\HeaderNotaMiniPosRepository.cs" />
+    <Compile Include="Transaksi\HeaderNotaRepository.cs" />
+    <Compile Include="Referensi\ItemMenuRepository.cs" />
+    <Compile Include="Referensi\JabatanRepository.cs" />
+    <Compile Include="Referensi\JenisPengeluaranRepository.cs" />
+    <Compile Include="Transaksi\JualProdukRepository.cs" />
+    <Compile Include="Referensi\KabupatenRajaOngkirRepository.cs" />
+    <Compile Include="Referensi\KartuRepository.cs" />
+    <Compile Include="Referensi\KaryawanRepository.cs" />
+    <Compile Include="Pengeluaran\KasbonRepository.cs" />
+    <Compile Include="Referensi\WilayahRepository.cs" />
+    <Compile Include="Transaksi\LabelNotaRepository.cs" />
+    <Compile Include="Log4NetRepository.cs" />
+    <Compile Include="Referensi\MenuRepository.cs" />
+    <Compile Include="Transaksi\MesinKasirRepository.cs" />
+    <Compile Include="Transaksi\PembayaranHutangProdukRepository.cs" />
+    <Compile Include="Pengeluaran\PembayaranKasbonRepository.cs" />
+    <Compile Include="Transaksi\PembayaranPiutangProdukRepository.cs" />
+    <Compile Include="Pengeluaran\PengeluaranBiayaRepository.cs" />
+    <Compile Include="Pengaturan\PenggunaRepository.cs" />
+    <Compile Include="Referensi\PenyesuaianStokRepository.cs" />
+    <Compile Include="Referensi\ProdukRepository.cs" />
+    <Compile Include="Pengaturan\ProfilRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\ReportBeliProdukRepository.cs" />
+    <Compile Include="Report\ReportGajiKaryawanRepository.cs" />
+    <Compile Include="Report\ReportHutangBeliProdukRepository.cs" />
+    <Compile Include="Report\ReportJualProdukRepository.cs" />
+    <Compile Include="Report\ReportKartuHutangRepository.cs" />
+    <Compile Include="Report\ReportKartuPiutangRepository.cs" />
+    <Compile Include="Report\ReportKartuStokRepository.cs" />
+    <Compile Include="Report\ReportKasbonRepository.cs" />
+    <Compile Include="Report\ReportMesinKasirRepository.cs" />
+    <Compile Include="Report\ReportPemasukanPengeluaranRepository.cs" />
+    <Compile Include="Report\ReportPembayaranHutangBeliProdukRepository.cs" />
+    <Compile Include="Report\ReportPembayaranPiutangJualProdukRepository.cs" />
+    <Compile Include="Report\ReportPengeluaranBiayaRepository.cs" />
+    <Compile Include="Report\ReportPiutangJualProdukRepository.cs" />
+    <Compile Include="Report\ReportReturBeliProdukRepository.cs" />
+    <Compile Include="Report\ReportReturJualProdukRepository.cs" />
+    <Compile Include="Report\ReportStokProdukRepository.cs" />
+    <Compile Include="Transaksi\ProdukSatuanRepository.cs" />
+    <Compile Include="Transaksi\ReturBeliProdukRepository.cs" />
+    <Compile Include="Transaksi\ReturJualProdukRepository.cs" />
+    <Compile Include="Pengaturan\RolePrivilegeRepository.cs" />
+    <Compile Include="Pengaturan\RoleRepository.cs" />
+    <Compile Include="Pengaturan\SettingAplikasiRepository.cs" />
+    <Compile Include="Referensi\SupplierRepository.cs" />
+    <Compile Include="Transaksi\ShiftRepository.cs" />
+    <Compile Include="UnitOfWork.cs" />
+    <Compile Include="WhereBuilder.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OpenRetail.Helper\OpenRetail.Helper.csproj">
+      <Project>{3316e651-8404-4cd4-a132-2b013489de67}</Project>
+      <Name>OpenRetail.Helper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenRetail.Model\OpenRetail.Model.csproj">
+      <Project>{6b9cabad-1a6c-4323-8548-bd5f3c12613c}</Project>
+      <Name>OpenRetail.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\OpenRetail.Repository.Api\OpenRetail.Repository.Api.csproj">
+      <Project>{981af3c6-f601-45ad-9f33-abbc7cc1f00f}</Project>
+      <Name>OpenRetail.Repository.Api</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="SqlServerTypes\x64\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x64\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\msvcr120.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="SqlServerTypes\x86\SqlServerSpatial140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <Import Project="..\..\lib\System.Text.Json.6.0.0\build\System.Text.Json.targets" Condition="Exists('..\..\lib\System.Text.Json.6.0.0\build\System.Text.Json.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\lib\System.Text.Json.6.0.0\build\System.Text.Json.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\lib\System.Text.Json.6.0.0\build\System.Text.Json.targets'))" />
+  </Target>
+</Project>
