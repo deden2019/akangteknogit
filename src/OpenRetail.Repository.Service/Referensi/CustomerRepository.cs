@@ -43,7 +43,9 @@ namespace OpenRetail.Repository.Service
     m_customer.alamat,
     m_customer.kontak,
     m_customer.telepon,
-    m_customer.plafon_piutang,
+m_customer.pin,
+m_customer.last_login,
+m_customer.plafon_piutang,
     m_customer.total_piutang,
     m_customer.total_pembayaran_piutang,
     m_customer.kode_pos,
@@ -143,14 +145,14 @@ namespace OpenRetail.Repository.Service
             {
                 _sql = SQL_TEMPLATE.Replace("{WHERE}", "");
                 _sql = _sql.Replace("{ORDER BY}",
-    "ORDER BY CAST(REGEXP_REPLACE(m_customer.kode_customer, '[^0-9]', '', 'g') AS BIGINT)");
+                    "ORDER BY CAST(REGEXP_REPLACE(m_customer.kode_customer, '[^0-9]', '', 'g') AS BIGINT)");
 
                 oList = MappingRecordToObject(_sql).ToList();
             }
             catch (Exception ex)
             {
                 _log.Error("Error:", ex);
-             
+                throw;
             }
 
             return oList;
@@ -192,6 +194,102 @@ namespace OpenRetail.Repository.Service
             }
 
             return oList;
+        }
+
+        public Customer GetByTelepon(string telepon)
+        {
+            Customer obj = null;
+
+            try
+            {
+                _sql = SQL_TEMPLATE.Replace("{WHERE}",
+                    "WHERE m_customer.telepon = @telepon");
+
+                _sql = _sql.Replace("{ORDER BY}", "");
+
+                obj = MappingRecordToObject(_sql,
+                    new { telepon }).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error:", ex);
+            }
+
+            return obj;
+        }
+
+        public MemberDashboard GetDashboard(string customerId)
+        {
+            MemberDashboard obj = null;
+
+            try
+            {
+                _sql = @"
+            SELECT
+                c.kode_customer,
+                c.nama_customer,
+                COUNT(j.jual_id) AS jumlah_transaksi,
+                COALESCE(SUM(j.total_nota), 0) AS total_belanja
+            FROM m_customer c
+            LEFT JOIN t_jual_produk j
+                ON c.customer_id = j.customer_id
+            WHERE c.customer_id = @customerId
+            GROUP BY
+                c.kode_customer,
+                c.nama_customer";
+
+                obj = _context.db.Query<MemberDashboard>(
+                    _sql,
+                    new { customerId }
+                ).SingleOrDefault();
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error:", ex);
+            }
+
+            return obj;
+        }
+
+        public int UpdateLastLogin(string customerId)
+        {
+            var result = 0;
+
+            try
+            {
+                _sql = @"UPDATE m_customer
+                 SET last_login = NOW()
+                 WHERE customer_id = @customerId";
+
+                result = _context.db.Execute(_sql,
+                    new { customerId });
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error:", ex);
+            }
+
+            return result;
+        }
+        public int UpdatePin(string customerId, string pin)
+        {
+            var result = 0;
+
+            try
+            {
+                _sql = @"UPDATE m_customer
+                 SET pin = @pin
+                 WHERE customer_id = @customerId";
+
+                result = _context.db.Execute(_sql,
+                    new { customerId, pin });
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Error:", ex);
+            }
+
+            return result;
         }
 
         public int Save(Customer obj)

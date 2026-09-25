@@ -44,6 +44,26 @@ namespace OpenRetail.Repository.Service
             this._log = log;
         }
 
+        public Customer GetByTelepon(string telepon)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdatePin(string customerId, string pin)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MemberDashboard GetDashboard(string customerId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int UpdateLastLogin(string customerId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Customer GetByID(string id)
         {
             Customer obj = null;

@@ -88,7 +88,42 @@ namespace OpenRetail.WebAPI.Controllers
             return _response;
         }
 
-		[HttpGet, Route("get_by_name")]
+        [HttpPost, Route("login")]
+        public IHttpActionResult Login(MemberLoginDTO model)
+        {
+            _httpStatusCode = HttpStatusCode.BadRequest;
+            _response = Content(_httpStatusCode, new ResponsePackage(_httpStatusCode));
+
+            try
+            {
+                var customer = _unitOfWork.CustomerRepository
+                                          .GetByTelepon(model.Telepon);
+
+                if (customer == null)
+                {
+                    return BadRequest("Nomor HP tidak ditemukan");
+                }
+
+                if (customer.pin != model.Pin)
+                {
+                    return BadRequest("PIN salah");
+                }
+
+                _unitOfWork.CustomerRepository
+                           .UpdateLastLogin(customer.customer_id);
+
+                return Ok(customer);
+            }
+            catch (Exception ex)
+            {
+                if (_log != null)
+                    _log.Error("Error:", ex);
+            }
+
+            return _response;
+        }
+
+        [HttpGet, Route("get_by_name")]
         public IHttpActionResult GetByName(string name)
         {
             _httpStatusCode = HttpStatusCode.BadRequest;
@@ -160,7 +195,27 @@ namespace OpenRetail.WebAPI.Controllers
             return _response;
         }
 
-		[HttpPost, Route("save")]
+        [HttpGet, Route("dashboard")]
+        public IHttpActionResult Dashboard(string customerId)
+        {
+            try
+            {
+                var result = _unitOfWork
+                    .CustomerRepository
+                    .GetDashboard(customerId);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                if (_log != null)
+                    _log.Error("Error:", ex);
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPost, Route("save")]
         public IHttpActionResult Save(CustomerDTO objDTO)
         {
             _httpStatusCode = HttpStatusCode.BadRequest;

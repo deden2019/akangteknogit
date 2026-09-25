@@ -83,6 +83,11 @@ namespace OpenRetail.Model
 		[Display(Name = "Telepon")]
 		public string telepon { get; set; }
 
+        [Display(Name = "PIN")]
+        public string pin { get; set; }
+
+        [Display(Name = "Last Login")]
+        public DateTime? last_login { get; set; }
         [Display(Name = "Diskon")]
         public double diskon { get; set; }
 

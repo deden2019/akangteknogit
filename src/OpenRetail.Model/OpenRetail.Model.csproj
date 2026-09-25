@@ -153,6 +153,7 @@
     <Compile Include="Referensi\Kartu.cs" />
     <Compile Include="Pengeluaran\Kasbon.cs" />
     <Compile Include="Referensi\Kecamatan.cs" />
+    <Compile Include="Transaksi\MemberDashboard.cs" />
     <Compile Include="Transaksi\PaymentHistoryType.cs" />
     <Compile Include="Referensi\Provinsi.cs" />
     <Compile Include="Referensi\Wilayah.cs" />

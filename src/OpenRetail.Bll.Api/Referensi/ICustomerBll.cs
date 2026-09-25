@@ -25,14 +25,19 @@ using System.Threading.Tasks;
 using OpenRetail.Model;
  
 namespace OpenRetail.Bll.Api
-{    
+{
     public interface ICustomerBll : IBaseBll<Customer>
     {
-        Customer GetByID(string id);    
+        Customer GetByID(string id);
         IList<Customer> GetByName(string name);
         IList<Customer> GetAll(bool isReseller);
 
-		int Save(Customer obj, ref ValidationError validationError);
-		int Update(Customer obj, ref ValidationError validationError);
+        // Member App
+        Customer GetByTelepon(string telepon);
+        int UpdatePin(string customerId, string pin);
+        int UpdateLastLogin(string customerId);
+
+        int Save(Customer obj, ref ValidationError validationError);
+        int Update(Customer obj, ref ValidationError validationError);
     }
 }     

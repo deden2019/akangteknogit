@@ -25,11 +25,18 @@ using System.Threading.Tasks;
 using OpenRetail.Model;
  
 namespace OpenRetail.Repository.Api
-{        
+{
     public interface ICustomerRepository : IBaseRepository<Customer>
     {
-		Customer GetByID(string id);            
+        Customer GetByID(string id);
         IList<Customer> GetByName(string name);
         IList<Customer> GetAll(bool isReseller);
+
+        // Member App
+        Customer GetByTelepon(string telepon);
+        int UpdatePin(string customerId, string pin);
+        int UpdateLastLogin(string customerId);
+
+        MemberDashboard GetDashboard(string customerId);
     }
 }     

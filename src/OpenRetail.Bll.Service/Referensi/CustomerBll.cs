@@ -159,6 +159,27 @@ namespace OpenRetail.Bll.Service
             return result;
         }
 
+        public Customer GetByTelepon(string telepon)
+        {
+            Customer obj = null;
+
+            if (_isUseWebAPI)
+            {
+                _unitOfWork = new UnitOfWork(_isUseWebAPI, _baseUrl, _log);
+                obj = _unitOfWork.CustomerRepository.GetByTelepon(telepon);
+            }
+            else
+            {
+                using (IDapperContext context = new DapperContext())
+                {
+                    _unitOfWork = new UnitOfWork(context, _log);
+                    obj = _unitOfWork.CustomerRepository.GetByTelepon(telepon);
+                }
+            }
+
+            return obj;
+        }
+
         public int Save(Customer obj, ref ValidationError validationError)
         {
 			var validatorResults = _validator.Validate(obj);
@@ -191,6 +212,48 @@ namespace OpenRetail.Bll.Service
                 {
                     _unitOfWork = new UnitOfWork(context, _log);
                     result = _unitOfWork.CustomerRepository.Update(obj);
+                }
+            }
+
+            return result;
+        }
+
+        public int UpdatePin(string customerId, string pin)
+        {
+            var result = 0;
+
+            if (_isUseWebAPI)
+            {
+                _unitOfWork = new UnitOfWork(_isUseWebAPI, _baseUrl, _log);
+                result = _unitOfWork.CustomerRepository.UpdatePin(customerId, pin);
+            }
+            else
+            {
+                using (IDapperContext context = new DapperContext())
+                {
+                    _unitOfWork = new UnitOfWork(context, _log);
+                    result = _unitOfWork.CustomerRepository.UpdatePin(customerId, pin);
+                }
+            }
+
+            return result;
+        }
+
+        public int UpdateLastLogin(string customerId)
+        {
+            var result = 0;
+
+            if (_isUseWebAPI)
+            {
+                _unitOfWork = new UnitOfWork(_isUseWebAPI, _baseUrl, _log);
+                result = _unitOfWork.CustomerRepository.UpdateLastLogin(customerId);
+            }
+            else
+            {
+                using (IDapperContext context = new DapperContext())
+                {
+                    _unitOfWork = new UnitOfWork(context, _log);
+                    result = _unitOfWork.CustomerRepository.UpdateLastLogin(customerId);
                 }
             }
 

@@ -1,0 +1,11 @@
+dokumentasi
+================
+ALTER TABLE m_customer
+ADD COLUMN pin VARCHAR(255);
+
+ALTER TABLE m_customer
+ADD COLUMN last_login TIMESTAMP;
+
+ALTER TABLE m_customer ADD COLUMN email VARCHAR(255) NULL;
+
+composer require simplesoftwareio/simple-qrcode
