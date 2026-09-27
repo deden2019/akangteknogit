@@ -154,6 +154,18 @@ namespace OpenRetail.App.Main
             
             AutoUpdater.CheckForUpdateEvent += AutoUpdaterOnCheckForUpdateEvent;            
         }
+        private void mnuTransferStok_Click(
+            object sender,
+            EventArgs e)
+        {
+            var frm =
+                new FrmEntryTransferStok(
+                    "Transfer Stok");
+
+            frm.ShowDialog();
+        }
+
+
 
         private void AutoUpdaterOnCheckForUpdateEvent(UpdateInfoEventArgs args)
         {

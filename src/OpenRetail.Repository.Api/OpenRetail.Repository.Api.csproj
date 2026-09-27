@@ -175,6 +175,7 @@
     <Compile Include="Report\IReportReturJualProdukRepository.cs" />
     <Compile Include="Report\IReportStokProdukRepository.cs" />
     <Compile Include="Transaksi\IShiftRepository.cs" />
+    <Compile Include="Transaksi\ITransferStokRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenRetail.Model\OpenRetail.Model.csproj">

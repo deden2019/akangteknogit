@@ -693,6 +693,12 @@
     <Compile Include="Transaksi\FrmEntryPembayaranPiutangPenjualanProduk.Designer.cs">
       <DependentUpon>FrmEntryPembayaranPiutangPenjualanProduk.cs</DependentUpon>
     </Compile>
+    <Compile Include="Transaksi\FrmEntryTransferStok.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Transaksi\FrmEntryTransferStok.Designer.cs">
+      <DependentUpon>FrmEntryTransferStok.cs</DependentUpon>
+    </Compile>
     <Compile Include="Transaksi\FrmEntryPenjualanProduk.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -952,6 +958,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Transaksi\FrmEntryPembayaranPiutangPenjualanProduk.resx">
       <DependentUpon>FrmEntryPembayaranPiutangPenjualanProduk.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Transaksi\FrmEntryTransferStok.resx">
+      <DependentUpon>FrmEntryTransferStok.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Transaksi\FrmEntryPenjualanProduk.resx">
       <DependentUpon>FrmEntryPenjualanProduk.cs</DependentUpon>

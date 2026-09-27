@@ -9,3 +9,92 @@ ADD COLUMN last_login TIMESTAMP;
 ALTER TABLE m_customer ADD COLUMN email VARCHAR(255) NULL;
 
 composer require simplesoftwareio/simple-qrcode
+
+============================
+sabtu
+==============================
+
+ALTER TABLE t_jual_produk
+ADD COLUMN cabang_id VARCHAR(10);
+
+
+ALTER TABLE t_jual_produk
+ADD CONSTRAINT fk_jual_cabang
+FOREIGN KEY (cabang_id)
+REFERENCES m_cabang(cabang_id);
+
+ni cabang bara
+ALTER TABLE m_produk
+ADD COLUMN cabang_id VARCHAR(10);
+
+
+ni buat barag jad milik panrama dulu
+UPDATE m_produk
+SET cabang_id = 'PNR'
+WHERE cabang_id IS NULL;
+
+
+Yang Lebih Aman Sekarang
+
+Lanjutkan dulu yang pasti dibutuhkan:
+
+1. t_beli_produk
+
+Tambah kolom:
+
+SQL
+ALTER TABLE t_beli_produk
+ADD COLUMN cabang_id VARCHAR(10);
+
+CREATE TABLE m_produk_cabang (
+    produk_cabang_id VARCHAR(36) PRIMARY KEY,
+    produk_id VARCHAR(36) NOT NULL,
+    cabang_id VARCHAR(10) NOT NULL,
+    stok NUMERIC(18,2) DEFAULT 0,
+    stok_gudang NUMERIC(18,2) DEFAULT 0,
+    last_update TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE t_transfer_stok (
+    transfer_id VARCHAR(36) PRIMARY KEY,
+    tanggal TIMESTAMP,
+    cabang_asal VARCHAR(10),
+    cabang_tujuan VARCHAR(10),
+    status VARCHAR(20),
+    keterangan TEXT
+);
+
+CREATE TABLE t_item_transfer_stok (
+    item_id VARCHAR(36) PRIMARY KEY,
+    transfer_id VARCHAR(36),
+    produk_id VARCHAR(36),
+    qty NUMERIC(18,2)
+);
+
+
+ALTER TABLE m_produk_cabang
+ADD CONSTRAINT uq_produk_cabang
+UNIQUE (produk_id, cabang_id);
+
+ALTER TABLE m_produk_cabang
+ADD CONSTRAINT fk_produk_cabang_produk
+FOREIGN KEY (produk_id)
+REFERENCES m_produk(produk_id);
+
+ALTER TABLE m_produk_cabang
+ADD CONSTRAINT fk_produk_cabang_cabang
+FOREIGN KEY (cabang_id)
+REFERENCES m_cabang(cabang_id);
+
+ALTER TABLE t_item_transfer_stok
+ADD CONSTRAINT fk_transfer_detail
+FOREIGN KEY (transfer_id)
+REFERENCES t_transfer_stok(transfer_id);
+
+
+ALTER TABLE t_item_transfer_stok
+ADD CONSTRAINT fk_transfer_produk
+FOREIGN KEY (produk_id)
+REFERENCES m_produk(produk_id);
+
+

@@ -146,6 +146,7 @@
     <Compile Include="Pengaturan\SettingAplikasiBll.cs" />
     <Compile Include="Referensi\SupplierBll.cs" />
     <Compile Include="Transaksi\ShiftBll.cs" />
+    <Compile Include="Transaksi\TransferStokBll.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OpenRetail.Bll.Api\OpenRetail.Bll.Api.csproj">

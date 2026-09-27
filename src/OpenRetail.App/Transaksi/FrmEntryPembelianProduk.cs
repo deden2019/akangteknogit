@@ -349,6 +349,7 @@ namespace OpenRetail.App.Transaksi
                 _beli = new BeliProduk();
 
             _beli.pengguna_id = this._pengguna.pengguna_id;
+            _beli.cabang_id = MainProgram.CabangId;
             _beli.Pengguna = this._pengguna;
             _beli.supplier_id = this._supplier.supplier_id;
             _beli.Supplier = this._supplier;

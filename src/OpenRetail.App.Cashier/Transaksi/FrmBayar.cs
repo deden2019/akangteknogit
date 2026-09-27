@@ -195,6 +195,7 @@ namespace OpenRetail.App.Cashier.Transaksi
                 return;
 
             _jual.mesin_id = MainProgram.mesinId;
+            _jual.cabang_id = MainProgram.CabangId;
             _jual.ppn = NumberHelper.StringToDouble(txtPPN.Text);
             _jual.diskon = NumberHelper.StringToDouble(txtDiskon.Text);
 

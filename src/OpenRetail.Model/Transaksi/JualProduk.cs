@@ -47,6 +47,8 @@ namespace OpenRetail.Model
 		
 		[Display(Name = "pengguna_id")]
 		public string pengguna_id { get; set; }
+        [Display(Name = "cabang_id")]
+        public string cabang_id { get; set; }
 
         [JsonIgnore]
 		[Write(false)]        

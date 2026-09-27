@@ -64,6 +64,7 @@
             this.mnuPenjualanProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPembayaranPiutangPenjualanProduk = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuReturPenjualanProduk = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuTransferStok = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPengeluaran = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuPengeluaranBiaya = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuKasbon = new System.Windows.Forms.ToolStripMenuItem();
@@ -378,13 +379,15 @@
             // mnuTransaksi
             // 
             this.mnuTransaksi.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuPembelianProduk,
-            this.mnuPembayaranHutangPembelianProduk,
-            this.mnuReturPembelianProduk,
-            this.toolStripSeparator4,
-            this.mnuPenjualanProduk,
-            this.mnuPembayaranPiutangPenjualanProduk,
-            this.mnuReturPenjualanProduk});
+    this.mnuPembelianProduk,
+    this.mnuPembayaranHutangPembelianProduk,
+    this.mnuReturPembelianProduk,
+    this.toolStripSeparator4,
+    this.mnuPenjualanProduk,
+    this.mnuPembayaranPiutangPenjualanProduk,
+    this.mnuReturPenjualanProduk,
+    this.mnuTransferStok});
+
             this.mnuTransaksi.Name = "mnuTransaksi";
             this.mnuTransaksi.Size = new System.Drawing.Size(66, 20);
             this.mnuTransaksi.Text = "Transaksi";
@@ -433,6 +436,16 @@
             this.mnuPembayaranPiutangPenjualanProduk.Tag = "FrmListPembayaranPiutangPenjualanProduk";
             this.mnuPembayaranPiutangPenjualanProduk.Text = "Pembayaran Piutang Penjualan Produk";
             this.mnuPembayaranPiutangPenjualanProduk.Click += new System.EventHandler(this.mnuPembayaranPiutangPenjualanProduk_Click);
+
+            //
+            // mnuTransferStok
+            //
+            this.mnuTransferStok.Name = "mnuTransferStok";
+            this.mnuTransferStok.Size = new System.Drawing.Size(283, 22);
+            this.mnuTransferStok.Tag = "FrmTransferStok";
+            this.mnuTransferStok.Text = "Transfer Stok";
+            this.mnuTransferStok.Click += new System.EventHandler(this.mnuTransferStok_Click);
+            
             // 
             // mnuReturPenjualanProduk
             // 
@@ -1151,6 +1164,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuPenjualanProduk;
         private System.Windows.Forms.ToolStripMenuItem mnuPembayaranPiutangPenjualanProduk;
         private System.Windows.Forms.ToolStripMenuItem mnuReturPenjualanProduk;
+        private System.Windows.Forms.ToolStripMenuItem mnuTransferStok;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel sbJam;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripLabel2;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel sbTanggal;

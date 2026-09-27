@@ -210,6 +210,7 @@
     <Compile Include="Pengaturan\SettingAplikasiRepository.cs" />
     <Compile Include="Referensi\SupplierRepository.cs" />
     <Compile Include="Transaksi\ShiftRepository.cs" />
+    <Compile Include="Transaksi\TransferStokRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
     <Compile Include="WhereBuilder.cs" />
   </ItemGroup>
