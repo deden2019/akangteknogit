@@ -9,10 +9,6 @@
       {
         "Path": "OpenRetail.App.Cashier\\OpenRetail.App.Cashier.csproj",
         "Action": "Start"
-      },
-      {
-        "Path": "OpenRetail.WebAPI\\OpenRetail.WebAPI.csproj",
-        "Action": "Start"
       }
     ]
   }

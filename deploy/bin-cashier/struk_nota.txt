@@ -3,47 +3,24 @@
             NPWP: 1234567890
            Berbah, Yogyakarta
              0813 8176 9915
+========================================
+29/09/2026        kasir         17:06:48
 
-Laporan Penjualan Per Kasir
-Per tanggal: 14/09/2026
-
-Kasir      : kasir
+Nota   : 202609290029
+Tanggal: 29/09/2026
+========================================
+sarimi                                  
+   1  x       5,000      0         5,000
+========================================
+Total Item   :                         1
+Total        :                     5,000
+Jumlah Bayar :                     5,000
+Kembali      :                         0
 ========================================
 
-Login      : 14/09/2026 09:33:05
-Saldo Awal :    500,000
-========================================
->> Belum ada transaksi <<
-
-Login      : 14/09/2026 09:49:29
-Saldo Awal :    500,000
-========================================
->> Belum ada transaksi <<
-
-Login      : 14/09/2026 10:00:31
-Saldo Awal :    500,000
-========================================
->> Belum ada transaksi <<
-
-Login      : 14/09/2026 10:07:58
-Saldo Awal :    500,000
-========================================
->> Belum ada transaksi <<
-
-Login      : 14/09/2026 10:15:34
-Saldo Awal :    500,000
-========================================
->> Belum ada transaksi <<
-
-Login      : 14/09/2026 10:40:35
-Saldo Awal :    500,000
-========================================
->> Belum ada transaksi <<
-
-Grand Total:
-Saldo Awal :  3,000,000
-Total item :          0
-Total      :          0
+  TERIMA KASIH. SELAMAT BELANJA KEMBALI
+        === LAYANAN KONSUMEN ===
+     SMS: 081381769915 CALL: 1102580
 
 
 

@@ -16,13 +16,13 @@
  * The latest version of this file can be found at https://github.com/rudi-krsoftware/open-retail
  */
 
+using OpenRetail.Model;
+using OpenRetail.Model.Report;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
-using OpenRetail.Model;
-using OpenRetail.Model.Report;
+using System.Windows.Forms;
 
 namespace OpenRetail.Helper.RAWPrinting
 {
@@ -381,9 +381,19 @@ namespace OpenRetail.Helper.RAWPrinting
             if (!Utils.IsRunningUnderIDE())
             {
                 if (autocutCode.Length > 0)
-                    textToPrint.Append(ESCCommandHelper.CustomeCode(autocutCode));                
+                    textToPrint.Append(ESCCommandHelper.CustomeCode(autocutCode));
 
-                RawPrintHelper.SendStringToPrinter(_printerName, textToPrint.ToString());
+                bool result = RawPrintHelper.SendStringToPrinter(
+                    _printerName,
+                    textToPrint.ToString()
+                );
+
+                MessageBox.Show("Cetak Result = " + result);
+
+
+                MessageBox.Show(
+                    "Cetak Result = " + result
+                );
             }
             else
             {

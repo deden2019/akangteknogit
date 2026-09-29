@@ -914,7 +914,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>T2CCm5hMGmladzQVYeXHD09moub+w/x8tr3I3ejcAXU=</dsig:DigestValue>
+        <dsig:DigestValue>yDdZa91Q0yvDIeMhpRn2IK+cbdiF68SyZu9dMB8i5ko=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -926,7 +926,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>69rXuryWbtMUGN0VniX7i91KQgWGq06heHa/25extO4=</dsig:DigestValue>
+        <dsig:DigestValue>IZvWdv28hKsMIfbC3bZsl5N5vTNBRc2Zfkq4M2sfrxs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -938,19 +938,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>cL5JT/DWoKJP5cbhaSSu/Tszz7A6uD4ECVit0/Htr7o=</dsig:DigestValue>
+        <dsig:DigestValue>BhRaYdL0fpje+RJT10fpNMfdB0kyNmNobFL1gq2B5xM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OpenRetail.Helper.dll" size="138240">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OpenRetail.Helper.dll" size="138752">
       <assemblyIdentity name="OpenRetail.Helper" version="1.6.3.30" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>0zED6W03jWD4lti7qKRHgSwiQfxyvdMEjFax7JXMi1Y=</dsig:DigestValue>
+        <dsig:DigestValue>MpZDmcySyxvJYol941MOjulyJdRdPcRtYCg3qPLuGBE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -962,19 +962,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ErwYBk5rIRDhTLmKLonmA8GihLznjgVMd6kBMBBFQpg=</dsig:DigestValue>
+        <dsig:DigestValue>GKPcq+x9VYd/ZGhJC2mCv/wyDuAAxlL06i9UmgAlMdk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OpenRetail.Report.dll" size="2937856">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OpenRetail.Report.dll" size="2882560">
       <assemblyIdentity name="OpenRetail.Report" version="1.6.3.30" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>nWx+Ogb0S5krInhEy8IHU0o9zg0YvVMZlGEtAYXEM7E=</dsig:DigestValue>
+        <dsig:DigestValue>+Z1k+cY6eTDcinN5x9z8toswQuyBJuswJ0wqSaHv+Pc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -986,19 +986,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>9BnAAaCbFwpA1FF2YSblN/krTDCAMavNc4OZE5f8v4U=</dsig:DigestValue>
+        <dsig:DigestValue>OGarhQzNo7dMa8YCBCBviOtE38bii6MWkWat97cm0hc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OpenRetail.Repository.Service.dll" size="540160">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OpenRetail.Repository.Service.dll" size="538624">
       <assemblyIdentity name="OpenRetail.Repository.Service" version="1.6.3.30" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>v4nbc6ozZDi8XMnZkCOLnYY/Zrp02oqWoJeD6eB+JII=</dsig:DigestValue>
+        <dsig:DigestValue>EDKBvXE7psn4DP98BRkwMGUADM0T8xgGA8MSyYb4zw8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1010,7 +1010,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>VN6+/so31yjRkyXAyCPIHNMutYl/ukFjWI3l6d6BsSI=</dsig:DigestValue>
+        <dsig:DigestValue>Nl9cFncBRuzvfn6sF80NRBPzfvT7XXG+qSNEtuHw13U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -1435,14 +1435,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="23208">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="stdole.dll" size="16384">
       <assemblyIdentity name="stdole" version="7.0.3300.0" publicKeyToken="B03F5F7F11D50A3A" language="neutral" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dPA3HhGVwBs3Y6RyHP1ffqi96e1yrBlUEvdebnM438Q=</dsig:DigestValue>
+        <dsig:DigestValue>1s35YcbScS/hlYgV5Rowlg15//Hpd4i3dBYn26ly6Pc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

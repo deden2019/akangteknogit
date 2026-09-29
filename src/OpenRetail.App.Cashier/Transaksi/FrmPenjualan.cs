@@ -1322,14 +1322,34 @@ namespace OpenRetail.App.Cashier.Transaksi
 
         private void CetakNotaMiniPOS(JualProduk jual)
         {
-            var autocutCode = _pengaturanUmum.is_autocut ? _pengaturanUmum.autocut_code : string.Empty;
-            var openCashDrawerCode = _pengaturanUmum.is_open_cash_drawer ? _pengaturanUmum.open_cash_drawer_code : string.Empty;
+            try
+            {
+                MessageBox.Show("Printer : " + _pengaturanUmum.nama_printer);
 
-            IRAWPrinting printerMiniPos = new PrinterMiniPOS(_pengaturanUmum.nama_printer);
+                var autocutCode = _pengaturanUmum.is_autocut ? _pengaturanUmum.autocut_code : string.Empty;
+                var openCashDrawerCode = _pengaturanUmum.is_open_cash_drawer ? _pengaturanUmum.open_cash_drawer_code : string.Empty;
 
-            printerMiniPos.Cetak(jual, _pengaturanUmum.list_of_header_nota_mini_pos, _pengaturanUmum.list_of_footer_nota_mini_pos, 
-                _pengaturanUmum.jumlah_karakter, _pengaturanUmum.jumlah_gulung, _customer != null, ukuranFont: _pengaturanUmum.ukuran_font,
-                autocutCode: autocutCode, openCashDrawerCode: openCashDrawerCode);
-        }        
+                IRAWPrinting printerMiniPos = new PrinterMiniPOS(_pengaturanUmum.nama_printer);
+
+                printerMiniPos.Cetak(
+                    jual,
+                    _pengaturanUmum.list_of_header_nota_mini_pos,
+                    _pengaturanUmum.list_of_footer_nota_mini_pos,
+                    _pengaturanUmum.jumlah_karakter,
+                    _pengaturanUmum.jumlah_gulung,
+                    _customer != null,
+                    ukuranFont: _pengaturanUmum.ukuran_font,
+                    autocutCode: autocutCode,
+                    openCashDrawerCode: openCashDrawerCode
+                );
+
+                MessageBox.Show("SELESAI CETAK");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
     }
 }
