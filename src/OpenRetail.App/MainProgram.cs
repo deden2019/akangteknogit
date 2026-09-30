@@ -48,9 +48,10 @@ namespace OpenRetail.App
         /// <summary>
         /// Url informasi update terbaru, untuk petunjuknya cek: http://coding4ever.net/blog/2016/01/10/paket-nuget-yang-wajib-dicoba-bagian-number-2-autoupdater-dot-net/
         /// </summary>
-        public static readonly string onlineUpdateUrlInfo = "https://raw.githubusercontent.com/deden2019/AkangTeknoRetail/refs/heads/main/updater/open-retail-auto-updater.xml";
+        public static readonly string onlineUpdateUrlInfo =
+ "https://raw.githubusercontent.com/deden2019/AkangTeknoRetail/main/updater/open-retail-auto-updater.xml";
         public static readonly string stageOfDevelopment = "";
-        public static readonly string appName = "Open Retail AkangTekno";
+        public static readonly string appName = "AkangTekno Retail";
         public static readonly string currentVersion = Utils.GetCurrentVersion();
 
         /// <summary>

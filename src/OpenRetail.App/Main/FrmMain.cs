@@ -171,8 +171,6 @@ namespace OpenRetail.App.Main
         {
             _lightSleeper.Cancel();
 
-            
-
             if (args != null)
             {
                 if (MainProgram.lisensi.is_trial)
@@ -182,18 +180,34 @@ namespace OpenRetail.App.Main
 
                     return;
                 }
+
                 if (args.IsUpdateAvailable)
-                {                    
+                {
+                    MessageBox.Show("MASUK KE UPDATE TERSEDIA");
                     var msg = "Update terbaru versi {0} sudah tersedia. Saat ini Anda sedang menggunakan Versi {1}\n\nApakah Anda ingin memperbarui aplikasi ini sekarang ?";
 
-                    var installedVersion = string.Format("{0}.{1}.{2}.{3} (v{0}.{1}.{2}{4})", args.InstalledVersion.Major, args.InstalledVersion.Minor, args.InstalledVersion.Build, args.InstalledVersion.Revision, MainProgram.stageOfDevelopment);
-                    var currentVersion = string.Format("{0}.{1}.{2}.{3}", args.CurrentVersion.Major, args.CurrentVersion.Minor, args.CurrentVersion.Build, args.CurrentVersion.Revision);
+                    var installedVersion = string.Format(
+                        "{0}.{1}.{2}.{3} (v{0}.{1}.{2}{4})",
+                        args.InstalledVersion.Major,
+                        args.InstalledVersion.Minor,
+                        args.InstalledVersion.Build,
+                        args.InstalledVersion.Revision,
+                        MainProgram.stageOfDevelopment);
 
-                    var dialogResult = MessageBox.Show(string.Format(msg, currentVersion, installedVersion), "Update Tersedia",
-                                                       MessageBoxButtons.YesNo,
-                                                       MessageBoxIcon.Information);
+                    var currentVersion = string.Format(
+                        "{0}.{1}.{2}.{3}",
+                        args.CurrentVersion.Major,
+                        args.CurrentVersion.Minor,
+                        args.CurrentVersion.Build,
+                        args.CurrentVersion.Revision);
 
-                    if (dialogResult.Equals(DialogResult.Yes))
+                    var dialogResult = MessageBox.Show(
+                        string.Format(msg, currentVersion, installedVersion),
+                        "Update Tersedia",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Information);
+
+                    if (dialogResult == DialogResult.Yes)
                     {
                         try
                         {
@@ -201,18 +215,30 @@ namespace OpenRetail.App.Main
                         }
                         catch (Exception exception)
                         {
-                            MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(
+                                exception.Message,
+                                exception.GetType().ToString(),
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
                         }
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Tidak ada update yang tersedia, silahkan dicoba lagi nanti.", "Update belum tersedia", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(
+                        "Tidak ada update yang tersedia, silahkan dicoba lagi nanti.",
+                        "Update belum tersedia",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
             }
             else
             {
-                MessageBox.Show("Gagal melakukan koneksi ke server, silahkan dicoba lagi nanti.", "Cek update terbaru gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(
+                    "Gagal melakukan koneksi ke server, silahkan dicoba lagi nanti.",
+                    "Cek update terbaru gagal",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -734,14 +760,20 @@ return;
                 {
                     AutoUpdater.Start(MainProgram.onlineUpdateUrlInfo);
 
-                    while (!_lightSleeper.HasBeenCanceled)
+                    for (int i = 0; i < 10; i++)
                     {
-                        _lightSleeper.Sleep(10000);
-                    } 
+                        if (_lightSleeper.HasBeenCanceled)
+                            break;
+
+                        _lightSleeper.Sleep(1000);
+                    }
                 }
             }
             else
-                MsgHelper.MsgWarning("Maaf link/url Online Update belum diset !!!\nProses cek update terbaru batal.");
+            {
+                MsgHelper.MsgWarning(
+                    "Maaf link/url Online Update belum diset !!!\nProses cek update terbaru batal.");
+            }
         }
 
         private void mnuKartu_Click(object sender, EventArgs e)
