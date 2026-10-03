@@ -59,6 +59,9 @@ namespace OpenRetail.Model
 		[Display(Name = "keterangan")]
 		public string keterangan { get; set; }
 
+        [Display(Name = "cabang_id")]
+        public string cabang_id { get; set; }
+
         [Write(false)]
 		[Display(Name = "tanggal_sistem")]
 		public Nullable<DateTime> tanggal_sistem { get; set; }

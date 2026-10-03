@@ -185,6 +185,11 @@ namespace OpenRetail.App.Referensi
 
             gridListProperties.Add(new GridListControlProperties { Header = "Diskon", Width = 50 });
             gridListProperties.Add(new GridListControlProperties { Header = "Stok Etalase", Width = 60 });
+
+            gridListProperties.Add(new GridListControlProperties { Header = "UTM", Width = 60 });
+            gridListProperties.Add(new GridListControlProperties { Header = "PNR", Width = 60 });
+            gridListProperties.Add(new GridListControlProperties { Header = "Total", Width = 60 });
+
             gridListProperties.Add(new GridListControlProperties { Header = "Stok Gudang", Width = 60 });
             gridListProperties.Add(new GridListControlProperties { Header = "Min. Stok Gudang", Width = 60 });
             gridListProperties.Add(new GridListControlProperties { Header = "Status" });
@@ -238,16 +243,25 @@ namespace OpenRetail.App.Referensi
             column = 11; // kolom diskon
             this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, column, 1, column));
 
-            column = 12; // kolom stok etalase
+            column = 12; // stok etalase
             this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, column, 1, column));
 
-            column = 13; // kolom stok gudang
+            column = 13; // UTM
             this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, column, 1, column));
 
-            column = 14; // kolom minimal stok
+            column = 14; // PNR
             this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, column, 1, column));
 
-            column = 15; // kolom status
+            column = 15; // Total
+            this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, column, 1, column));
+
+            column = 16; // Stok Gudang
+            this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, column, 1, column));
+
+            column = 17; // Min Stok Gudang
+            this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, column, 1, column));
+
+            column = 18; // Status
             this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, column, 1, column));
 
             var headerStyle = this.gridList.Grid.BaseStylesMap["Column Header"].StyleInfo;
@@ -348,22 +362,30 @@ namespace OpenRetail.App.Referensi
 
                                 case 12:
                                     e.Style.CellValue = produk.stok;
-                                    e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
                                     break;
 
                                 case 13:
-                                    e.Style.CellValue = produk.stok_gudang;
-                                    e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
+                                    e.Style.CellValue = produk.stok_utm;
                                     break;
 
                                 case 14:
-                                    e.Style.CellValue = produk.minimal_stok_gudang;
-                                    e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
+                                    e.Style.CellValue = produk.stok_pnr;
                                     break;
 
                                 case 15:
+                                    e.Style.CellValue = produk.total_stok;
+                                    break;
+
+                                case 16:
+                                    e.Style.CellValue = produk.stok_gudang;
+                                    break;
+
+                                case 17:
+                                    e.Style.CellValue = produk.minimal_stok_gudang;
+                                    break;
+
+                                case 18:
                                     e.Style.CellValue = produk.is_aktif ? "Aktif" : "Non Aktif";
-                                    e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
                                     break;
 
                                 default:
@@ -392,15 +414,7 @@ namespace OpenRetail.App.Referensi
 
         public void Ok(object sender, bool isNewData, object data)
         {
-            var produk = (Produk)data;
-
-            if (isNewData)
-            {
-                GridListControlHelper.AddObject<Produk>(this.gridList, _listOfProduk, produk, additionalRowCount: 1);
-                ResetButton();
-            }
-            else
-                GridListControlHelper.UpdateObject<Produk>(this.gridList, _listOfProduk, produk, additionalRowCount: 1);
+            RefreshData();
         }
 
         private void txtNamaProduk_KeyPress(object sender, KeyPressEventArgs e)

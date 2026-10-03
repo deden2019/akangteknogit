@@ -37,6 +37,39 @@ namespace OpenRetail.Repository.Service
 
                 _context.db.Insert<TransferStok>(obj, trans);
 
+                foreach (var item in obj.item_transfer)
+                {
+                    item.transfer_id = obj.transfer_id;
+
+                    _context.db.Insert<ItemTransferStok>(item, trans);
+
+                    var sqlKurang = @"
+                UPDATE m_produk_cabang
+                SET stok_gudang = stok_gudang - @qty
+                WHERE produk_id = @produkId
+                AND cabang_id = @cabangAsal";
+
+                    _context.db.Execute(sqlKurang, new
+                    {
+                        qty = item.qty,
+                        produkId = item.produk_id,
+                        cabangAsal = obj.cabang_asal
+                    }, trans);
+
+                    var sqlTambah = @"
+                UPDATE m_produk_cabang
+                SET stok_gudang = stok_gudang + @qty
+                WHERE produk_id = @produkId
+                AND cabang_id = @cabangTujuan";
+
+                    _context.db.Execute(sqlTambah, new
+                    {
+                        qty = item.qty,
+                        produkId = item.produk_id,
+                        cabangTujuan = obj.cabang_tujuan
+                    }, trans);
+                }
+
                 result = 1;
 
                 _context.Commit();
@@ -44,6 +77,7 @@ namespace OpenRetail.Repository.Service
             catch (Exception ex)
             {
                 _log.Error("Error:", ex);
+                _context.Rollback();
                 result = 0;
             }
 

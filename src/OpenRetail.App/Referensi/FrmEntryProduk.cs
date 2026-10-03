@@ -240,15 +240,27 @@ namespace OpenRetail.App.Referensi
 
                 if (result > 0)
                 {
-                    Listener.Ok(this, _isNewData, _produk);
+                    MessageBox.Show("MASUK RESULT > 0");
+
+                    if (Listener != null)
+                    {
+                        MessageBox.Show("LISTENER ADA");
+                        Listener.Ok(this, _isNewData, _produk);
+                    }
+                    else
+                    {
+                        MessageBox.Show("LISTENER NULL");
+                    }
 
                     if (_isNewData)
                     {
                         base.ResetForm(this);
 
                         chkAktif.Checked = true;
+
                         txtKodeProduk.Text = this._bll.GetLastKodeProduk();
-                        txtKodeProduk.Focus();
+
+                        txtNamaProduk.Focus();
                     }
                     else
                     {
@@ -264,7 +276,7 @@ namespace OpenRetail.App.Referensi
                     }
                     else
                     {
-                        //MsgHelper.MsgDuplicate("kode produk");
+                        MessageBox.Show("RESULT = 0");
                     }
                 }
             }

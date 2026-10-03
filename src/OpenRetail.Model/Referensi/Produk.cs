@@ -118,7 +118,19 @@ namespace OpenRetail.Model
 
         [Write(false)]
         public Nullable<DateTime> last_update { get; set; }
-	}
+
+        [Write(false)]
+        public double stok_utm { get; set; }
+
+        [Write(false)]
+        public double stok_pnr { get; set; }
+
+        [Write(false)]
+        public double total_stok
+        {
+            get { return stok_utm + stok_pnr; }
+        }
+    }
 
     public class ProdukValidator : AbstractValidator<Produk>
     {

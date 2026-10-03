@@ -558,10 +558,11 @@ namespace OpenRetail.App.Transaksi
             {
                 if (this._jual == null)
                     _jual = new JualProduk();
-            }                
+            }
 
             _jual.pengguna_id = this._pengguna.pengguna_id;
             _jual.Pengguna = this._pengguna;
+            _jual.cabang_id = this._pengguna.cabang_id;
 
             if (this._customer != null)
             {
@@ -1042,7 +1043,17 @@ namespace OpenRetail.App.Transaksi
                         else
                         {
                             // pencarian berdasarkan kode produk
-                            produk = bll.GetByKode(kodeProduk);
+                            produk = bll.GetByKode(
+    kodeProduk,
+    true);
+
+                            if (produk == null)
+                            {
+                                MsgHelper.MsgWarning("Data produk tidak ditemukan");
+                                GridListControlHelper.SelectCellText(grid, rowIndex, colIndex);
+                                return;
+                            }
+
 
                             if (produk == null)
                             {
@@ -1139,8 +1150,11 @@ namespace OpenRetail.App.Transaksi
 
                             return;
                         }
-                        
-                        var listOfProduk = bll.GetByName(namaProduk, false);
+
+                        var listOfProduk = bll.GetByName(
+                            namaProduk,
+                            false,
+                            true);
 
                         if (listOfProduk.Count == 0)
                         {
@@ -1150,6 +1164,8 @@ namespace OpenRetail.App.Transaksi
                         else if (listOfProduk.Count == 1)
                         {                            
                             produk = listOfProduk[0];
+
+                           
 
                             IHargaGrosirBll hargaGrosirBll = new HargaGrosirBll(MainProgram.isUseWebAPI, MainProgram.baseUrl, _log);
                             produk.list_of_harga_grosir = hargaGrosirBll.GetListHargaGrosir(produk.produk_id).ToList();

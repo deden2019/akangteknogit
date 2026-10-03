@@ -39,6 +39,8 @@ namespace OpenRetail.Repository.Api
         IHargaGrosirRepository HargaGrosirRepository { get; }
         IAlasanPenyesuaianStokRepository AlasanPenyesuaianStokRepository { get; }
         IPenyesuaianStokRepository PenyesuaianStokRepository { get; }
+        ITransferStokRepository TransferStokRepository { get; }
+
 
         ICustomerRepository CustomerRepository { get; }
         ISupplierRepository SupplierRepository { get; }

@@ -419,6 +419,58 @@ namespace OpenRetail.Repository.Service
 
                         _context.db.Insert<ItemBeliProduk>(item, transaction);
 
+                        var cek = _context.db.ExecuteScalar<int>(@"
+SELECT COUNT(*)
+FROM m_produk_cabang
+WHERE produk_id = @produkId
+AND cabang_id = 'UTM'
+", new
+                        {
+                            produkId = item.produk_id
+                        }, transaction);
+
+                        if (cek == 0)
+                        {
+                            _context.db.Execute(@"
+        INSERT INTO m_produk_cabang
+        (
+            produk_cabang_id,
+            produk_id,
+            cabang_id,
+            stok,
+            stok_gudang
+        )
+        VALUES
+        (
+            @id,
+            @produkId,
+            'UTM',
+            0,
+            @qty
+        )
+    ",
+                            new
+                            {
+                                id = _context.GetGUID(),
+                                produkId = item.produk_id,
+                                qty = item.jumlah
+                            }, transaction);
+                        }
+                        else
+                        {
+                            _context.db.Execute(@"
+        UPDATE m_produk_cabang
+        SET stok_gudang = stok_gudang + @qty
+        WHERE produk_id = @produkId
+        AND cabang_id = 'UTM'
+    ",
+                            new
+                            {
+                                qty = item.jumlah,
+                                produkId = item.produk_id
+                            }, transaction);
+                        }
+
                         // update entity state
                         item.entity_state = EntityState.Unchanged;
                     }
@@ -443,10 +495,13 @@ namespace OpenRetail.Repository.Service
             catch (Exception ex)
             {
                 _log.Error("Error:", ex);
+                throw;
             }
 
             return result;
-        }        
+        }      
+        
+
 
         public int Update(BeliProduk obj)
         {

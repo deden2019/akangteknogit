@@ -123,6 +123,7 @@
       <Link>VersionInfo.cs</Link>
     </Compile>
     <Compile Include="Lisensi\Lisensi.cs" />
+    <Compile Include="Pengaturan\AppSession.cs" />
     <Compile Include="Pengaturan\Cabang.cs" />
     <Compile Include="Pengaturan\SettingCustomerDisplay.cs" />
     <Compile Include="Pengaturan\SettingPort.cs" />

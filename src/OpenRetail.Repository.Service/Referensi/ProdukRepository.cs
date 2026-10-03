@@ -54,6 +54,35 @@ namespace OpenRetail.Repository.Service
             this._log = log;
         }
 
+        private void LoadStokCabang(Produk produk)
+        {
+
+        
+            var data = _context.db.Query(@"
+    SELECT cabang_id, stok, stok_gudang
+    FROM m_produk_cabang
+    WHERE produk_id = @produkId",
+                new { produkId = produk.produk_id });
+
+            foreach (var item in data)
+            {
+                string cabangId = item.cabang_id.ToString();
+
+                if (cabangId == "UTM")
+                    produk.stok_utm = Convert.ToDouble(item.stok);
+
+                else if (cabangId == "PNR")
+                    produk.stok_pnr = Convert.ToDouble(item.stok);
+
+                // tambahkan ini
+                if (cabangId == AppSession.CabangId)
+                {
+                    produk.stok = Convert.ToDouble(item.stok);
+                    produk.stok_gudang = Convert.ToDouble(item.stok_gudang);
+                }
+            }
+        }
+
         private IEnumerable<Produk> MappingRecordToObject(string sql, object param = null)
         {
             IEnumerable<Produk> oList = _context.db.Query<Produk, Golongan, Produk>(sql, (p, g) =>
@@ -99,6 +128,10 @@ namespace OpenRetail.Repository.Service
                                    .Replace("{OFFSET}", "");
 
                 obj = MappingRecordToObject(_sql, new { id }).SingleOrDefault();
+                if (obj != null)
+                {
+                    LoadStokCabang(obj);
+                }
             }
             catch (Exception ex)
             {
@@ -108,7 +141,9 @@ namespace OpenRetail.Repository.Service
             return obj;
         }
 
-        public Produk GetByKode(string kodeProduk, bool isCekStatusAktif = false)
+        public Produk GetByKode(
+            string kodeProduk,
+            bool isCekStatusAktif = false)
         {
             Produk obj = null;
 
@@ -125,6 +160,27 @@ namespace OpenRetail.Repository.Service
                 kodeProduk = kodeProduk.ToLower();
 
                 obj = MappingRecordToObject(_sql, new { kodeProduk }).SingleOrDefault();
+
+                if (obj != null)
+                {
+                    var stokCabang = _context.db.QueryFirstOrDefault(@"
+SELECT stok, stok_gudang
+FROM m_produk_cabang
+WHERE produk_id = @produkId
+AND cabang_id = @cabangId",
+                    new
+                    {
+                        produkId = obj.produk_id,
+                        cabangId = AppSession.CabangId
+                    });
+
+                    if (stokCabang != null)
+                    {
+                        obj.stok = stokCabang.stok;
+                        obj.stok_gudang = stokCabang.stok_gudang;
+                    }
+                }
+
 
                 if (obj != null)
                     obj.list_of_harga_grosir = GetListHargaGrosir(obj.produk_id).ToList();
@@ -156,8 +212,10 @@ namespace OpenRetail.Repository.Service
                                                                .ToList();
             }
         }
-
-        public IList<Produk> GetByName(string name, bool isLoadHargaGrosir = true, bool isCekStatusAktif = false)
+        public IList<Produk> GetByName(
+    string name,
+    bool isLoadHargaGrosir = true,
+    bool isCekStatusAktif = false)
         {
             IList<Produk> oList = new List<Produk>();
 
@@ -175,7 +233,33 @@ namespace OpenRetail.Repository.Service
 
                 oList = MappingRecordToObject(_sql, new { name }).ToList();
 
-                if (isLoadHargaGrosir) SetHargaGrosir(oList);
+                foreach (var item in oList)
+                {
+                    var stokCabang = _context.db.QueryFirstOrDefault(@"
+        SELECT stok, stok_gudang
+        FROM m_produk_cabang
+        WHERE produk_id = @produkId
+        AND cabang_id = @cabangId",
+                        new
+                        {
+                            produkId = item.produk_id,
+                            cabangId = AppSession.CabangId
+                        });
+
+                    if (stokCabang != null)
+                    {
+                        item.stok = (double)stokCabang.stok;
+                        item.stok_gudang = (double)stokCabang.stok_gudang;
+                    }
+                    else
+                    {
+                        item.stok = 0;
+                        item.stok_gudang = 0;
+                    }
+                }
+
+                if (isLoadHargaGrosir)
+                    SetHargaGrosir(oList);
             }
             catch (Exception ex)
             {
@@ -202,9 +286,16 @@ namespace OpenRetail.Repository.Service
                                    .Replace("{ORDER BY}", sortBy)
                                    .Replace("{OFFSET}", "OFFSET @pageSize * (@pageNumber - 1) LIMIT @pageSize");
 
-                oList = MappingRecordToObject(_sql, new { name, pageNumber, pageSize }).ToList();
+                oList = MappingRecordToObject(_sql,
+                    new { name, pageNumber, pageSize }).ToList();
 
-                if (isLoadHargaGrosir) SetHargaGrosir(oList);
+                foreach (var item in oList)
+                {
+                    LoadStokCabang(item);
+                }
+
+                if (isLoadHargaGrosir)
+                    SetHargaGrosir(oList);
             }
             catch (Exception ex)
             {
@@ -225,6 +316,11 @@ namespace OpenRetail.Repository.Service
                                    .Replace("{OFFSET}", "");
 
                 oList = MappingRecordToObject(_sql, new { golonganId }).ToList();
+
+                foreach (var item in oList)
+                {
+                    LoadStokCabang(item);
+                }
 
                 SetHargaGrosir(oList);
             }
@@ -251,7 +347,13 @@ namespace OpenRetail.Repository.Service
                                    .Replace("{ORDER BY}", sortBy)
                                    .Replace("{OFFSET}", "OFFSET @pageSize * (@pageNumber - 1) LIMIT @pageSize");
 
-                oList = MappingRecordToObject(_sql, new { golonganId, pageNumber, pageSize }).ToList();
+                oList = MappingRecordToObject(_sql,
+                    new { golonganId, pageNumber, pageSize }).ToList();
+
+                foreach (var item in oList)
+                {
+                    LoadStokCabang(item);
+                }
 
                 SetHargaGrosir(oList);
             }
@@ -294,6 +396,10 @@ namespace OpenRetail.Repository.Service
                                    .Replace("{OFFSET}", "");
 
                 oList = MappingRecordToObject(_sql).ToList();
+                foreach (var item in oList)
+                {
+                    LoadStokCabang(item);
+                }
 
                 SetHargaGrosir(oList);
             }
@@ -318,6 +424,10 @@ namespace OpenRetail.Repository.Service
                                    .Replace("{OFFSET}", "");
 
                 oList = MappingRecordToObject(_sql).ToList();
+                foreach (var item in oList)
+                {
+                    LoadStokCabang(item);
+                }
 
                 SetHargaGrosir(oList);
             }
@@ -344,7 +454,16 @@ namespace OpenRetail.Repository.Service
                                    .Replace("{ORDER BY}", sortBy)
                                    .Replace("{OFFSET}", "OFFSET @pageSize * (@pageNumber - 1) LIMIT @pageSize");
 
-                oList = MappingRecordToObject(_sql, new { pageNumber, pageSize }).ToList();
+                oList = MappingRecordToObject(_sql, new
+                {
+                    pageNumber,
+                    pageSize
+                }).ToList();
+
+                foreach (var item in oList)
+                {
+                    LoadStokCabang(item);
+                }
 
                 SetHargaGrosir(oList);
             }

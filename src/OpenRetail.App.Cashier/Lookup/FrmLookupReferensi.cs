@@ -179,7 +179,7 @@ namespace OpenRetail.App.Cashier.Lookup
 
                             case 5:
                                 e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
-                                e.Style.CellValue = (produk.stok + produk.stok_gudang);
+                                e.Style.CellValue = produk.total_stok;
                                 break;
 
                             case 6:

@@ -104,7 +104,10 @@ namespace OpenRetail.Repository.Service
             return result;
         }
 
-        public IList<Produk> GetByName(string name, bool isLoadHargaGrosir = true, bool isCekStatusAktif = false)
+        public IList<Produk> GetByName(
+            string name,
+            bool isLoadHargaGrosir = true,
+            bool isCekStatusAktif = false)
         {
             IList<Produk> oList = new List<Produk>();
 

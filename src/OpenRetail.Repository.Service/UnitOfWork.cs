@@ -60,6 +60,7 @@ namespace OpenRetail.Repository.Service
         private IReturJualProdukRepository _returjualprodukRepository;
         private ILog4NetRepository _log4NetRepository;
         private IPenyesuaianStokRepository _penyesuaianstokRepository;
+        private ITransferStokRepository _transferStokRepository;
         private IPenggunaRepository _penggunaRepository;
         private IRoleRepository _roleRepository;
         private IRolePrivilegeRepository _roleprivilegeRepository;
@@ -488,5 +489,19 @@ namespace OpenRetail.Repository.Service
                 return _produkSatuanRepository;
             }
         }
+
+
+        public ITransferStokRepository TransferStokRepository
+        {
+            get
+            {
+                return _transferStokRepository ??
+                    (_transferStokRepository =
+                        new TransferStokRepository(
+                            _context,
+                            _log));
+            }
+        }
+
     }
 }     

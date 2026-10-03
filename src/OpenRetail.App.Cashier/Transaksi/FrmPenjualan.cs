@@ -505,7 +505,9 @@ namespace OpenRetail.App.Cashier.Transaksi
                         else
                         {
                             // pencarian berdasarkan kode produk
-                            produk = bll.GetByKode(kodeProduk, true);
+                            produk = bll.GetByKode(
+     kodeProduk,
+     true);
 
                             if (produk == null)
                             {
@@ -601,7 +603,10 @@ namespace OpenRetail.App.Cashier.Transaksi
                             return;
                         }
 
-                        var listOfProduk = bll.GetByName(namaProduk, false, true);
+                        var listOfProduk = bll.GetByName(
+                            namaProduk,
+                            false,
+                            true);
 
                         if (listOfProduk.Count == 0)
                         {

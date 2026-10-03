@@ -287,8 +287,8 @@ namespace OpenRetail.App.Cashier.Main
                     log4net.GlobalContext.Properties["UserName"] = txtUserName.Text;
                     MainProgram.pengguna = penggunaBll.GetByID(txtUserName.Text);
                     MainProgram.CabangId = MainProgram.pengguna.cabang_id;
-                    MainProgram.CabangId = MainProgram.pengguna.cabang_id;
 
+                    AppSession.CabangId = MainProgram.pengguna.cabang_id;
                     MessageBox.Show(
                         "User : " + MainProgram.pengguna.nama_pengguna +
                         "\nCabang : " + MainProgram.CabangId);

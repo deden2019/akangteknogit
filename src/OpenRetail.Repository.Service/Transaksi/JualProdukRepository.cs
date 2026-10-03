@@ -348,6 +348,7 @@ LEFT JOIN m_dropshipper ON m_dropshipper.dropshipper_id = t_jual_produk.dropship
 
         public int Save(JualProduk obj)
         {
+           
             var result = 0;
 
             try
@@ -377,6 +378,49 @@ LEFT JOIN m_dropshipper ON m_dropshipper.dropshipper_id = t_jual_produk.dropship
 
                         _context.db.Insert<ItemJualProduk>(item, transaction);
 
+                        // cek stok cabang
+                        var stokSaatIni = _context.db.ExecuteScalar<double>(@"
+SELECT COALESCE(stok_gudang,0)
+FROM m_produk_cabang
+WHERE produk_id = @produkId
+AND cabang_id = @cabangId",
+                        new
+                        {
+                            produkId = item.produk_id,
+                            cabangId = obj.cabang_id
+                        },
+                        transaction);
+
+                        if (stokSaatIni < item.jumlah)
+                        {
+                            throw new Exception(
+                                string.Format(
+                                    "Stok produk '{0}' tidak mencukupi. Stok tersedia: {1}, Qty jual: {2}",
+                                    item.Produk.nama_produk,
+                                    stokSaatIni,
+                                    item.jumlah));
+                        }
+
+                        // kurangi stok cabang
+                        _context.db.Execute(@"
+UPDATE m_produk_cabang
+SET stok_gudang = stok_gudang - @qty
+WHERE produk_id = @produkId
+AND cabang_id = @cabangId",
+                        new
+                        {
+                            qty = item.jumlah,
+                            produkId = item.produk_id,
+                            cabangId = obj.cabang_id
+                        },
+                        transaction);
+
+                        // update entity state
+                        item.entity_state = EntityState.Unchanged;
+
+                        // update entity state
+                        item.entity_state = EntityState.Unchanged;
+
                         // update entity state
                         item.entity_state = EntityState.Unchanged;
                     }
@@ -400,6 +444,9 @@ LEFT JOIN m_dropshipper ON m_dropshipper.dropshipper_id = t_jual_produk.dropship
             }
             catch (Exception ex)
             {
+                _context.Rollback();
+                _log.Error("Error:", ex);
+
                 throw;
             }
 

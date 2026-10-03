@@ -209,7 +209,9 @@ namespace OpenRetail.Bll.Service
                             if (produk.satuan.Length > 20)
                                 produk.satuan = produk.satuan.Substring(0, 20);
 
-                            var oldProduk = _unitOfWork.ProdukRepository.GetByKode(produk.kode_produk);
+                            var oldProduk = _unitOfWork.ProdukRepository.GetByKode(
+    produk.kode_produk,
+    false);
                             if (oldProduk == null)
                             {
                                 produk.is_aktif = true;

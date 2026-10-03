@@ -144,6 +144,7 @@ namespace OpenRetail.App.Referensi
             _penyesuaianStok.penambahan_stok_gudang = NumberHelper.StringToDouble(txtPenambahanStokGudang.Text);
             _penyesuaianStok.pengurangan_stok = NumberHelper.StringToDouble(txtPenguranganStokEtalase.Text);
             _penyesuaianStok.pengurangan_stok_gudang = NumberHelper.StringToDouble(txtPenguranganStokGudang.Text);
+            _penyesuaianStok.cabang_id = AppSession.CabangId;
 
             _penyesuaianStok.keterangan = txtKeterangan.Text;
 

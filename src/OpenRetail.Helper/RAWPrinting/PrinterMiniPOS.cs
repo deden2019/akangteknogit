@@ -388,12 +388,6 @@ namespace OpenRetail.Helper.RAWPrinting
                     textToPrint.ToString()
                 );
 
-                MessageBox.Show("Cetak Result = " + result);
-
-
-                MessageBox.Show(
-                    "Cetak Result = " + result
-                );
             }
             else
             {

@@ -13,20 +13,28 @@ namespace OpenRetail.App.Transaksi
     public partial class FrmEntryTransferStok :
         FrmEntryStandard, IListener
     {
-        private Produk _produk;
 
+
+
+        private ITransferStokBll _bll;
+        private Produk _produk;
         private double GetStokProduk()
         {
             if (_produk == null)
                 return 0;
 
-            return _produk.stok;
+            return _produk.stok_gudang;
         }
 
         public FrmEntryTransferStok(string header)
-                : base()
+            : base()
         {
             InitializeComponent();
+
+            _bll = new TransferStokBll(
+                MainProgram.isUseWebAPI,
+                MainProgram.baseUrl,
+                MainProgram.log);
 
             gridControl.RowCount = 1;
             gridControl.ColCount = 4;
@@ -35,7 +43,6 @@ namespace OpenRetail.App.Transaksi
             gridControl[1, 2].CellValue = "Kode Produk";
             gridControl[1, 3].CellValue = "Nama Produk";
             gridControl[1, 4].CellValue = "Qty";
-
 
             ColorManagerHelper.SetTheme(this, this);
 
@@ -64,6 +71,29 @@ namespace OpenRetail.App.Transaksi
                 return;
             }
 
+            if (cmbCabangAsal.Text == cmbCabangTujuan.Text)
+            {
+                MessageBox.Show(
+                    "Cabang asal dan tujuan tidak boleh sama");
+
+                return;
+            }
+
+            double qty = Convert.ToDouble(txtQty.Text);
+
+            if (string.IsNullOrWhiteSpace(txtQty.Text))
+            {
+                MessageBox.Show("Qty harus diisi");
+                txtQty.Focus();
+                return;
+            }
+
+            if (qty <= 0)
+            {
+                MessageBox.Show("Qty harus lebih besar dari 0");
+                return;
+            }
+
             var obj = new TransferStok();
 
             obj.transfer_id = Guid.NewGuid().ToString();
@@ -81,10 +111,20 @@ namespace OpenRetail.App.Transaksi
 
             obj.item_transfer.Add(item);
 
-            MessageBox.Show(
-                "Transfer : " + obj.transfer_id +
-                "\nProduk : " + _produk.nama_produk +
-                "\nQty : " + item.qty);
+
+            ValidationError validationError = null;
+
+            var result = _bll.Save(obj, ref validationError);
+
+            if (result > 0)
+            {
+                MessageBox.Show("Transfer stok berhasil");
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Transfer stok gagal");
+            }
         }
 
 
@@ -103,7 +143,9 @@ namespace OpenRetail.App.Transaksi
                     MainProgram.log);
 
                 var listOfProduk =
-                    bll.GetByName(txtKodeProduk.Text.Trim(), false);
+                    bll.GetByName(
+                        txtKodeProduk.Text.Trim(),
+                        false);
 
                 if (listOfProduk.Count == 0)
                 {
@@ -116,7 +158,7 @@ namespace OpenRetail.App.Transaksi
                     txtKodeProduk.Text = _produk.kode_produk;
                     txtNamaProduk.Text = _produk.nama_produk;
 
-                    lblStok.Text = _produk.stok.ToString();
+                    lblStok.Text = _produk.stok_gudang.ToString();
 
                     txtQty.Focus();
 
@@ -144,11 +186,11 @@ namespace OpenRetail.App.Transaksi
 
             double qty = Convert.ToDouble(txtQty.Text);
 
-            if (qty > _produk.stok)
+            if (qty > _produk.stok_gudang)
             {
                 MessageBox.Show(
                     "Stok tidak mencukupi !" +
-                    "\nStok tersedia : " + _produk.stok +
+                    "\nStok tersedia : " + _produk.stok_gudang +
                     "\nQty transfer : " + qty,
                     "Peringatan",
                     MessageBoxButtons.OK,
@@ -182,7 +224,7 @@ namespace OpenRetail.App.Transaksi
                 txtKodeProduk.Text = _produk.kode_produk;
                 txtNamaProduk.Text = _produk.nama_produk;
 
-                lblStok.Text = _produk.stok.ToString();
+                lblStok.Text = _produk.stok_gudang.ToString();
 
                 txtQty.Focus();
             }

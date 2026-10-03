@@ -98,3 +98,9 @@ FOREIGN KEY (produk_id)
 REFERENCES m_produk(produk_id);
 
 
+=================================
+ALTER TABLE t_beli_produk
+ADD COLUMN cabang_id VARCHAR(10);
+
+
+
