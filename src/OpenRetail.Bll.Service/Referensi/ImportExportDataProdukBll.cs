@@ -30,6 +30,7 @@ using OpenRetail.Repository.Service;
 using System.IO;
 using System.Diagnostics;
 
+
 namespace OpenRetail.Bll.Service
 {
     public class ImportExportDataProdukBll : IImportExportDataBll<Produk>
@@ -62,7 +63,7 @@ namespace OpenRetail.Bll.Service
             return result;
         }
 
-        public bool IsValidFormat(string workSheetName)
+        public bool I   (string workSheetName)
         {
             var result = true;
 
@@ -70,30 +71,35 @@ namespace OpenRetail.Bll.Service
             {
                 var ws = _workbook.Worksheet(workSheetName);
 
-                // Look for the first row used
                 var firstRowUsed = ws.FirstRowUsed();
 
-                var colums = new string[] { 
-                                            "GOLONGAN", "KODE PRODUK", "NAMA PRODUK", "SATUAN",
-                                            "HARGA BELI", "HARGA JUAL (RETAIL)", "DISKON (RETAIL)", 
-                                            "HARGA GROSIR #1", "JUMLAH MINIMAL GROSIR #1", "DISKON GROSIR #1", 
-                                            "HARGA GROSIR #2", "JUMLAH MINIMAL GROSIR #2", "DISKON GROSIR #2", 
-                                            "HARGA GROSIR #3", "JUMLAH MINIMAL GROSIR #3", "DISKON GROSIR #3",
-                                            "STOK ETALASE", "STOK GUDANG", "MINIMAL STOK GUDANG"
-                                          };
+                var colums = new string[] {
+            "GOLONGAN", "KODE PRODUK", "NAMA PRODUK", "SATUAN",
+            "HARGA BELI", "HARGA JUAL (RETAIL)", "DISKON (RETAIL)",
+            "HARGA GROSIR #1", "JUMLAH MINIMAL GROSIR #1", "DISKON GROSIR #1",
+            "HARGA GROSIR #2", "JUMLAH MINIMAL GROSIR #2", "DISKON GROSIR #2",
+            "HARGA GROSIR #3", "JUMLAH MINIMAL GROSIR #3", "DISKON GROSIR #3",
+            "STOK ETALASE", "STOK GUDANG", "MINIMAL STOK GUDANG"
+        };
 
                 for (int i = 0; i < colums.Length; i++)
                 {
-                    if (!(colums[i] == firstRowUsed.Cell(i + 1).GetString()))
+                    var excelHeader = firstRowUsed.Cell(i + 1).GetString().Trim();
+
+                    if (colums[i] != excelHeader)
                     {
-                        result = false;
-                        break;
+                        throw new Exception(
+                            "Kolom ke-" + (i + 1) +
+                            "\nExcel : " + excelHeader +
+                            "\nHarus : " + colums[i]
+                        );
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                result = false;
+                _log.Error(ex.Message);
+                throw;
             }
 
             return result;

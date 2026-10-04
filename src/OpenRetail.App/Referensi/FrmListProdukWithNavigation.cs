@@ -59,6 +59,10 @@ namespace OpenRetail.App.Referensi
             InitializeComponent();
             ColorManagerHelper.SetTheme(this, this);
 
+            MessageBox.Show(
+                "Parent=" + btnImport.Parent?.Name +
+                "\nVisible=" + btnImport.Visible
+            );
             this.btnImport.Visible = true;
             this.toolTip1.SetToolTip(this.btnImport, "Import/Export Data Produk");
             this.mnuBukaFileMaster.Text = "Buka File Master Produk";

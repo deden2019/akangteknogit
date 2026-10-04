@@ -46,8 +46,7 @@
             // 
             // btnImport
             // 
-            this.btnImport.Location = new System.Drawing.Point(850, 4);
-
+            //this.btnImport.Location = new System.Drawing.Point(850, 4);
             // 
             // tableLayoutPanel5
             // 
@@ -61,7 +60,7 @@
             this.tableLayoutPanel5.RowCount = 2;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(1045, 357);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(937, 357);
             this.tableLayoutPanel5.TabIndex = 0;
             // 
             // tableLayoutPanel6
@@ -83,7 +82,7 @@
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(1045, 28);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(937, 28);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
             // cmbGolongan
@@ -106,13 +105,13 @@
             this.flowLayoutPanel2.Location = new System.Drawing.Point(563, 0);
             this.flowLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(482, 28);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(374, 28);
             this.flowLayoutPanel2.TabIndex = 0;
             // 
             // btnCari
             // 
             this.btnCari.Image = global::OpenRetail.App.Properties.Resources.search16;
-            this.btnCari.Location = new System.Drawing.Point(442, 0);
+            this.btnCari.Location = new System.Drawing.Point(334, 0);
             this.btnCari.Margin = new System.Windows.Forms.Padding(3, 0, 3, 3);
             this.btnCari.Name = "btnCari";
             this.btnCari.Size = new System.Drawing.Size(37, 23);
@@ -129,7 +128,7 @@
             this.txtNamaProduk.ForeColor = System.Drawing.Color.Black;
             this.txtNamaProduk.LeaveFocusColor = System.Drawing.Color.White;
             this.txtNamaProduk.LetterOnly = false;
-            this.txtNamaProduk.Location = new System.Drawing.Point(233, 3);
+            this.txtNamaProduk.Location = new System.Drawing.Point(125, 3);
             this.txtNamaProduk.Name = "txtNamaProduk";
             this.txtNamaProduk.NumericOnly = false;
             this.txtNamaProduk.SelectionText = false;
@@ -172,7 +171,7 @@
             this.gridList.Name = "gridList";
             this.gridList.Properties.BackgroundColor = System.Drawing.SystemColors.Window;
             this.gridList.SelectedIndex = -1;
-            this.gridList.Size = new System.Drawing.Size(1039, 323);
+            this.gridList.Size = new System.Drawing.Size(931, 323);
             this.gridList.TabIndex = 1;
             this.gridList.TopIndex = 0;
             this.gridList.DoubleClick += new System.EventHandler(this.gridList_DoubleClick);
