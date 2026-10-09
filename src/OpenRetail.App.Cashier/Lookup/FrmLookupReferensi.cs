@@ -1,22 +1,4 @@
-﻿/**
- * Copyright (C) 2017 Kamarudin (http://coding4ever.net/)
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- *
- * The latest version of this file can be found at https://github.com/rudi-krsoftware/open-retail
- */
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -97,7 +79,12 @@ namespace OpenRetail.App.Cashier.Lookup
                     gridListProperties.Add(new GridListControlProperties { Header = "Kode Produk", Width = 150 });
                     gridListProperties.Add(new GridListControlProperties { Header = "Nama Produk", Width = 400 });
                     gridListProperties.Add(new GridListControlProperties { Header = "Harga", Width = 120 });
-                    gridListProperties.Add(new GridListControlProperties { Header = "Stok", Width = 70 });
+                    gridListProperties.Add(
+                        new GridListControlProperties
+                        {
+                            Header = "Stok Gudang",
+                            Width = 70
+                        });
                     gridListProperties.Add(new GridListControlProperties { Header = "Golongan" });
                     GridListControlHelper.InitializeGridListControl<Produk>(this.gridList, _listOfProduk, gridListProperties);
                     this.gridList.Grid.QueryCellInfo += GridProduk_QueryCellInfo;
@@ -179,7 +166,7 @@ namespace OpenRetail.App.Cashier.Lookup
 
                             case 5:
                                 e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
-                                e.Style.CellValue = produk.total_stok;
+                                e.Style.CellValue = produk.stok_gudang;
                                 break;
 
                             case 6:

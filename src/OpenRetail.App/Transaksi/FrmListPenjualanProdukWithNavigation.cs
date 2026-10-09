@@ -146,7 +146,7 @@ namespace OpenRetail.App.Transaksi
                 Header = "Piutang",
                 Width = 100
             });
-            gridListProperties.Add(new GridListControlProperties { Header = "Sisa Piutang", Width = 100 });
+            gridListProperties.Add(new GridListControlProperties { Header = "Sudah Di bayar", Width = 100 });
             gridListProperties.Add(new GridListControlProperties { Header = "Histori Pembayaran", Width = 80 });
 
             if (_pengaturanUmum != null &&
@@ -178,10 +178,12 @@ namespace OpenRetail.App.Transaksi
     _pengaturanUmum.jenis_printer == JenisPrinter.InkJet)
             {
                 // merge header kolom cetak nota/label
-                this.gridList.Grid.CoveredRanges.Add(GridRangeInfo.Cells(0, 10, 0, 11));
+                this.gridList.Grid.CoveredRanges.Add(
+       GridRangeInfo.Cells(0, 13, 0, 14)
+   );
             }
 
-            if (_listOfJual.Count > 0)
+                if (_listOfJual.Count > 0)
                 this.gridList.SetSelected(0, true);
 
             this.gridList.Grid.PushButtonClick += delegate(object sender, GridCellPushButtonClickEventArgs e)
@@ -192,25 +194,35 @@ namespace OpenRetail.App.Transaksi
 
                     switch (e.ColIndex)
                     {
-                        case 12: // histori pembayaran
-                            using (new StCursor(Cursors.WaitCursor, new TimeSpan(0, 0, 0, 0)))
+                        case 12:
                             {
-                                var jual = _listOfJual[index];
-
-                                IPembayaranPiutangProdukBll bll = new PembayaranPiutangProdukBll(_log);
-                                var listOfHistoriPembayaran = bll.GetHistoriPembayaran(jual.jual_id);
-
-                                if (listOfHistoriPembayaran.Count > 0)
+                                try
                                 {
-                                    var frmHistoriPembayaran = new FrmLookupHistoriPembayaran("Histori Pembayaran Piutang", jual, listOfHistoriPembayaran);
+                                    var jual = _listOfJual[index];
+
+                                    IPembayaranPiutangProdukBll bll =
+                                        new PembayaranPiutangProdukBll(_log);
+
+                                    var listOfHistoriPembayaran =
+                                        bll.GetHistoriPembayaran(jual.jual_id);
+
+                                    MessageBox.Show("Jumlah Histori : " + listOfHistoriPembayaran.Count);
+
+                                    var frmHistoriPembayaran =
+                                        new FrmLookupHistoriPembayaran(
+                                            "Histori Pembayaran Piutang",
+                                            jual,
+                                            listOfHistoriPembayaran);
+
+                                    MessageBox.Show("Form berhasil dibuat");
+
                                     frmHistoriPembayaran.ShowDialog();
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    MsgHelper.MsgInfo("Belum ada informasi histori pembayaran");
+                                    MessageBox.Show(ex.ToString());
                                 }
                             }
-
                             break;
 
                         case 13: // cetak nota jual
@@ -348,30 +360,41 @@ namespace OpenRetail.App.Transaksi
                                     e.Style.CellValue = NumberHelper.NumberToString(jual.grand_total);
                                     break;
 
-                                case 10:
+                                case 10: // Piutang
                                     e.Style.HorizontalAlignment = GridHorizontalAlignment.Right;
                                     e.Style.CellValue = NumberHelper.NumberToString(totalNota - jual.total_pelunasan);
                                     break;
 
-                                case 11: // button cetak nota
-                                    e.Style.Enabled = jual.Customer != null;
+                                case 11: // Sisa Piutang
+                                    e.Style.HorizontalAlignment = GridHorizontalAlignment.Right;
+                                    e.Style.CellValue = NumberHelper.NumberToString(jual.total_pelunasan);
+                                    break;
+
+                                case 12: // Histori Pembayaran
                                     e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
-                                    e.Style.CellType = GridCellTypeName.PushButton;                                    
+                                    e.Style.CellType = GridCellTypeName.PushButton;
+                                    e.Style.BackColor = oldStyleBackColor;
+                                    e.Style.Description = "Histori";
+                                    break;
+
+                                case 13: // Cetak Nota
+                                    e.Style.Enabled = true;
+                                    e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
+                                    e.Style.CellType = GridCellTypeName.PushButton;
                                     e.Style.BackColor = oldStyleBackColor;
                                     e.Style.Description = "Cetak Nota";
                                     break;
 
-                                case 12: // cetak label nota
+                                case 14: // Cetak Label
                                     if (_pengaturanUmum != null &&
                                         _pengaturanUmum.jenis_printer == JenisPrinter.InkJet)
                                     {
-                                        e.Style.Enabled = jual.Customer != null;
+                                        e.Style.Enabled = true;
                                         e.Style.HorizontalAlignment = GridHorizontalAlignment.Center;
                                         e.Style.CellType = GridCellTypeName.PushButton;
                                         e.Style.BackColor = oldStyleBackColor;
-                                        e.Style.Description = "Cetak Label Nota";
-                                    }                                    
-
+                                        e.Style.Description = "Cetak Label";
+                                    }
                                     break;
 
                                 default:

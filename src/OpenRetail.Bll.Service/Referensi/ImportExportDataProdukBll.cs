@@ -63,7 +63,7 @@ namespace OpenRetail.Bll.Service
             return result;
         }
 
-        public bool I   (string workSheetName)
+        public bool IsValidFormat(string workSheetName)
         {
             var result = true;
 

@@ -197,9 +197,9 @@ namespace OpenRetail.App.Referensi
             {
                 _listOfCustomer = _bll.GetAll();
 
-                MessageBox.Show(
-                    "Jumlah Customer : " +
-                    _listOfCustomer.Count.ToString());
+//                MessageBox.Show(
+  //                  "Jumlah Customer : " +
+   //                 _listOfCustomer.Count.ToString());
 
                 GridListControlHelper.Refresh<Customer>(this.gridList, _listOfCustomer);
             }

@@ -635,16 +635,13 @@ namespace OpenRetail.App.Transaksi
                             switch (this._pengaturanUmum.jenis_printer)
                             {
                                 case JenisPrinter.DotMatrix:
-                                    if (MsgHelper.MsgKonfirmasi("Apakah proses pencetakan ingin dilanjutkan ?"))
-                                        CetakNotaDotMatrix(_jual);
-                                    
+                                    CetakNotaDotMatrix(_jual);
                                     break;
 
                                 case JenisPrinter.MiniPOS:
-                                    if (MsgHelper.MsgKonfirmasi("Apakah proses pencetakan ingin dilanjutkan ?"))
-                                        CetakNotaMiniPOS(_jual);
-
+                                    CetakNotaMiniPOS(_jual);
                                     break;
+
                                 default:
                                     CetakNota(_jual.jual_id);
                                     break;

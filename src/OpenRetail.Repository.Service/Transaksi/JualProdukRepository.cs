@@ -16,18 +16,17 @@
  * The latest version of this file can be found at https://github.com/rudi-krsoftware/open-retail
  */
 
+using Dapper;
+using Dapper.Contrib.Extensions;
+using log4net;
+using OpenRetail.Model;
+using OpenRetail.Repository.Api;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
-using log4net;
-using Dapper;
-using Dapper.Contrib.Extensions;
-
-using OpenRetail.Model;
-using OpenRetail.Repository.Api;
     
 
 namespace OpenRetail.Repository.Service
@@ -376,52 +375,55 @@ LEFT JOIN m_dropshipper ON m_dropshipper.dropshipper_id = t_jual_produk.dropship
                         item.jual_id = obj.jual_id;
                         item.pengguna_id = obj.pengguna_id;
 
+                        // baca stok dulu
+                        var produk = _context.db.QueryFirstOrDefault<dynamic>(@"
+SELECT
+    stok,
+    stok_gudang
+FROM m_produk
+WHERE produk_id = @produkId",
+                        new
+                        {
+                            produkId = item.produk_id
+                        },
+                        transaction);
+
+                        double stokEtalase = Convert.ToDouble(produk.stok);
+                        double stokGudang = Convert.ToDouble(produk.stok_gudang);
+                        double qtyJual = item.jumlah;
+
+
+
+                        // simpan detail HANYA SATU KALI
                         _context.db.Insert<ItemJualProduk>(item, transaction);
 
-                        // cek stok cabang
-                        var stokSaatIni = _context.db.ExecuteScalar<double>(@"
-SELECT COALESCE(stok_gudang,0)
-FROM m_produk_cabang
-WHERE produk_id = @produkId
-AND cabang_id = @cabangId",
-                        new
+                        // kurangi stok etalase dulu
+                        if (stokEtalase >= qtyJual)
                         {
-                            produkId = item.produk_id,
-                            cabangId = obj.cabang_id
-                        },
-                        transaction);
+                            stokEtalase -= qtyJual;
+                        }
+                        else
+                        {
+                            double sisa = qtyJual - stokEtalase;
 
-                        if (stokSaatIni < item.jumlah)
-                        {
-                            throw new Exception(
-                                string.Format(
-                                    "Stok produk '{0}' tidak mencukupi. Stok tersedia: {1}, Qty jual: {2}",
-                                    item.Produk.nama_produk,
-                                    stokSaatIni,
-                                    item.jumlah));
+                            stokEtalase = 0;
+                            stokGudang -= sisa;
                         }
 
-                        // kurangi stok cabang
+                        // update stok
                         _context.db.Execute(@"
-UPDATE m_produk_cabang
-SET stok_gudang = stok_gudang - @qty
-WHERE produk_id = @produkId
-AND cabang_id = @cabangId",
+UPDATE m_produk
+SET stok = @stokEtalase,
+    stok_gudang = @stokGudang
+WHERE produk_id = @produkId",
                         new
                         {
-                            qty = item.jumlah,
-                            produkId = item.produk_id,
-                            cabangId = obj.cabang_id
+                            stokEtalase,
+                            stokGudang,
+                            produkId = item.produk_id
                         },
                         transaction);
 
-                        // update entity state
-                        item.entity_state = EntityState.Unchanged;
-
-                        // update entity state
-                        item.entity_state = EntityState.Unchanged;
-
-                        // update entity state
                         item.entity_state = EntityState.Unchanged;
                     }
                 }
@@ -436,6 +438,9 @@ AND cabang_id = @cabangId",
                 }
 
                 _context.Commit();
+
+                // kirim notifikasi ke Laravel
+                KirimPushNotification(obj);
 
                 LogicalThreadContext.Properties["NewValue"] = obj.ToJson();
                 _log.Info("Tambah data");
@@ -533,6 +538,37 @@ AND cabang_id = @cabangId",
             }
 
             return result;
+        }
+
+        private void KirimPushNotification(JualProduk obj)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(obj.customer_id))
+                    return;
+
+                using (var client = new WebClient())
+                {
+                    client.Headers[HttpRequestHeader.ContentType] = "application/json";
+
+                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(new
+                    {
+                        customer_id = obj.customer_id,
+                        nota = obj.nota,
+                        total = obj.grand_total
+                    });
+
+                    client.UploadString(
+                        "https://kopkarrspb.id/api/send-transaction-notification",
+                        "POST",
+                        json
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
         }
 
         public int Update(JualProduk obj)

@@ -85,6 +85,20 @@ namespace OpenRetail.App.Cashier.Transaksi
             SetStatusBar();
             ShowInfoTanggal(_currentNota);
             txtKasir.Text = this._pengguna.nama_pengguna;
+            ICustomerBll customerBll = new CustomerBll(_log);
+
+            _customer = customerBll.GetByID("916468c2-1d30-4911-9f86-8ae099f93429");
+
+            if (_customer != null)
+            {
+                txtCustomer.Text = _customer.nama_customer;
+
+                lblStatusBar.Text =
+                    lblStatusBar.Text.Replace(
+                        "Cari Pelanggan",
+                        "Reset Pelanggan");
+            }
+
 
             DisplayKalimatPembuka();
             tmrDisplayKalimatPenutup.Interval = _settingCustomerDisplay.delay_display_closing_sentence * 1000;
@@ -895,6 +909,16 @@ namespace OpenRetail.App.Cashier.Transaksi
             txtCustomer.Clear();
             _customer = null;
 
+
+            ICustomerBll customerBll = new CustomerBll(_log);
+
+            _customer = customerBll.GetByID("916468c2-1d30-4911-9f86-8ae099f93429");
+
+            txtCustomer.Text =
+                _customer != null
+                    ? _customer.nama_customer
+                    : "";
+
             _currentNota = this._bll.GetLastNota();
             ShowInfoTanggal(_currentNota);
 
@@ -982,20 +1006,10 @@ namespace OpenRetail.App.Cashier.Transaksi
 
                                 break;
 
-                            case Keys.F4: // cari/reset pelanggan
+                            case Keys.F4:
 
-                                if (_customer == null) // cari pelanggan
-                                {
-                                    txtCustomer.Enabled = true;
-                                    txtCustomer.Focus();
-                                }
-                                else // reset pelanggan
-                                {
-                                    _customer = null;
-                                    txtCustomer.Clear();
-
-                                    lblStatusBar.Text = lblStatusBar.Text.Replace("Reset Pelanggan", "Cari Pelanggan");
-                                }                                
+                                txtCustomer.Enabled = true;
+                                txtCustomer.Focus();
 
                                 break;
 
@@ -1329,12 +1343,16 @@ namespace OpenRetail.App.Cashier.Transaksi
         {
             try
             {
-                MessageBox.Show("Printer : " + _pengaturanUmum.nama_printer);
+                var autocutCode = _pengaturanUmum.is_autocut
+                    ? _pengaturanUmum.autocut_code
+                    : string.Empty;
 
-                var autocutCode = _pengaturanUmum.is_autocut ? _pengaturanUmum.autocut_code : string.Empty;
-                var openCashDrawerCode = _pengaturanUmum.is_open_cash_drawer ? _pengaturanUmum.open_cash_drawer_code : string.Empty;
+                var openCashDrawerCode = _pengaturanUmum.is_open_cash_drawer
+                    ? _pengaturanUmum.open_cash_drawer_code
+                    : string.Empty;
 
-                IRAWPrinting printerMiniPos = new PrinterMiniPOS(_pengaturanUmum.nama_printer);
+                IRAWPrinting printerMiniPos =
+                    new PrinterMiniPOS(_pengaturanUmum.nama_printer);
 
                 printerMiniPos.Cetak(
                     jual,
@@ -1347,12 +1365,22 @@ namespace OpenRetail.App.Cashier.Transaksi
                     autocutCode: autocutCode,
                     openCashDrawerCode: openCashDrawerCode
                 );
-
-                MessageBox.Show("SELESAI CETAK");
+                _log.Info("Cetak nota berhasil");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+#if DEBUG
+        MessageBox.Show(ex.ToString());
+#else
+                _log.Error(ex);
+
+                MessageBox.Show(
+                    "Maaf, gagal mencetak nota.\nSilakan hubungi administrator.",
+                    "Pemberitahuan",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning
+                );
+#endif
             }
         }
 

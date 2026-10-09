@@ -56,31 +56,7 @@ namespace OpenRetail.Repository.Service
 
         private void LoadStokCabang(Produk produk)
         {
-
-        
-            var data = _context.db.Query(@"
-    SELECT cabang_id, stok, stok_gudang
-    FROM m_produk_cabang
-    WHERE produk_id = @produkId",
-                new { produkId = produk.produk_id });
-
-            foreach (var item in data)
-            {
-                string cabangId = item.cabang_id.ToString();
-
-                if (cabangId == "UTM")
-                    produk.stok_utm = Convert.ToDouble(item.stok);
-
-                else if (cabangId == "PNR")
-                    produk.stok_pnr = Convert.ToDouble(item.stok);
-
-                // tambahkan ini
-                if (cabangId == AppSession.CabangId)
-                {
-                    produk.stok = Convert.ToDouble(item.stok);
-                    produk.stok_gudang = Convert.ToDouble(item.stok_gudang);
-                }
-            }
+            // Tidak pakai m_produk_cabang lagi
         }
 
         private IEnumerable<Produk> MappingRecordToObject(string sql, object param = null)
@@ -161,27 +137,7 @@ namespace OpenRetail.Repository.Service
 
                 obj = MappingRecordToObject(_sql, new { kodeProduk }).SingleOrDefault();
 
-                if (obj != null)
-                {
-                    var stokCabang = _context.db.QueryFirstOrDefault(@"
-SELECT stok, stok_gudang
-FROM m_produk_cabang
-WHERE produk_id = @produkId
-AND cabang_id = @cabangId",
-                    new
-                    {
-                        produkId = obj.produk_id,
-                        cabangId = AppSession.CabangId
-                    });
-
-                    if (stokCabang != null)
-                    {
-                        obj.stok = stokCabang.stok;
-                        obj.stok_gudang = stokCabang.stok_gudang;
-                    }
-                }
-
-
+          
                 if (obj != null)
                     obj.list_of_harga_grosir = GetListHargaGrosir(obj.produk_id).ToList();
             }
@@ -233,31 +189,6 @@ AND cabang_id = @cabangId",
 
                 oList = MappingRecordToObject(_sql, new { name }).ToList();
 
-                foreach (var item in oList)
-                {
-                    var stokCabang = _context.db.QueryFirstOrDefault(@"
-        SELECT stok, stok_gudang
-        FROM m_produk_cabang
-        WHERE produk_id = @produkId
-        AND cabang_id = @cabangId",
-                        new
-                        {
-                            produkId = item.produk_id,
-                            cabangId = AppSession.CabangId
-                        });
-
-                    if (stokCabang != null)
-                    {
-                        item.stok = (double)stokCabang.stok;
-                        item.stok_gudang = (double)stokCabang.stok_gudang;
-                    }
-                    else
-                    {
-                        item.stok = 0;
-                        item.stok_gudang = 0;
-                    }
-                }
-
                 if (isLoadHargaGrosir)
                     SetHargaGrosir(oList);
             }
@@ -289,10 +220,6 @@ AND cabang_id = @cabangId",
                 oList = MappingRecordToObject(_sql,
                     new { name, pageNumber, pageSize }).ToList();
 
-                foreach (var item in oList)
-                {
-                    LoadStokCabang(item);
-                }
 
                 if (isLoadHargaGrosir)
                     SetHargaGrosir(oList);
@@ -317,10 +244,7 @@ AND cabang_id = @cabangId",
 
                 oList = MappingRecordToObject(_sql, new { golonganId }).ToList();
 
-                foreach (var item in oList)
-                {
-                    LoadStokCabang(item);
-                }
+               
 
                 SetHargaGrosir(oList);
             }
@@ -350,10 +274,7 @@ AND cabang_id = @cabangId",
                 oList = MappingRecordToObject(_sql,
                     new { golonganId, pageNumber, pageSize }).ToList();
 
-                foreach (var item in oList)
-                {
-                    LoadStokCabang(item);
-                }
+            
 
                 SetHargaGrosir(oList);
             }
@@ -396,10 +317,6 @@ AND cabang_id = @cabangId",
                                    .Replace("{OFFSET}", "");
 
                 oList = MappingRecordToObject(_sql).ToList();
-                foreach (var item in oList)
-                {
-                    LoadStokCabang(item);
-                }
 
                 SetHargaGrosir(oList);
             }
@@ -424,12 +341,9 @@ AND cabang_id = @cabangId",
                                    .Replace("{OFFSET}", "");
 
                 oList = MappingRecordToObject(_sql).ToList();
-                foreach (var item in oList)
-                {
-                    LoadStokCabang(item);
-                }
 
                 SetHargaGrosir(oList);
+
             }
             catch (Exception ex)
             {
@@ -460,10 +374,7 @@ AND cabang_id = @cabangId",
                     pageSize
                 }).ToList();
 
-                foreach (var item in oList)
-                {
-                    LoadStokCabang(item);
-                }
+               
 
                 SetHargaGrosir(oList);
             }

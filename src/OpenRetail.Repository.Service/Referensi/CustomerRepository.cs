@@ -121,9 +121,12 @@ m_customer.plafon_piutang,
 
             try
             {
-                _sql = SQL_TEMPLATE.Replace("{WHERE}", "WHERE LOWER(m_customer.nama_customer) LIKE @name");
+                _sql = SQL_TEMPLATE.Replace("{WHERE}",
+                    @"WHERE LOWER(m_customer.nama_customer) LIKE @name
+               OR LOWER(m_customer.kode_customer) LIKE @name");
+
                 _sql = _sql.Replace("{ORDER BY}",
-    "ORDER BY CAST(REGEXP_REPLACE(m_customer.kode_customer, '[^0-9]', '', 'g') AS BIGINT)");
+                    "ORDER BY CAST(REGEXP_REPLACE(m_customer.kode_customer, '[^0-9]', '', 'g') AS BIGINT)");
 
                 name = "%" + name.ToLower() + "%";
 

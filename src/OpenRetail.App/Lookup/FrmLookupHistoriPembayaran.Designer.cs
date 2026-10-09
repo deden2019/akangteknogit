@@ -1,4 +1,6 @@
-﻿namespace OpenRetail.App.Lookup
+﻿using OpenRetail.Model;
+
+namespace OpenRetail.App.Lookup
 {
     partial class FrmLookupHistoriPembayaran
     {
@@ -6,6 +8,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+    
 
         /// <summary>
         /// Clean up any resources being used.
@@ -35,6 +38,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlFooter = new System.Windows.Forms.Panel();
             this.btnOk = new System.Windows.Forms.Button();
+            this.btnPrint = new System.Windows.Forms.Button();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
@@ -113,12 +117,25 @@
             // 
             this.pnlFooter.BackColor = System.Drawing.SystemColors.ControlDark;
             this.pnlFooter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlFooter.Controls.Add(this.btnPrint);
             this.pnlFooter.Controls.Add(this.btnOk);
             this.pnlFooter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFooter.Location = new System.Drawing.Point(3, 3);
             this.pnlFooter.Name = "pnlFooter";
             this.pnlFooter.Size = new System.Drawing.Size(692, 35);
             this.pnlFooter.TabIndex = 0;
+            // btnPrint
+            this.btnPrint.Anchor = ((System.Windows.Forms.AnchorStyles)
+                ((System.Windows.Forms.AnchorStyles.Top |
+                  System.Windows.Forms.AnchorStyles.Bottom)));
+
+            this.btnPrint.Location = new System.Drawing.Point(227, 6);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(75, 23);
+            this.btnPrint.TabIndex = 1;
+            this.btnPrint.Text = "Print";
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.btnPrint_Click);
             // 
             // btnOk
             // 
@@ -375,6 +392,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.Panel pnlFooter;
         private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Button btnPrint;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         protected Syncfusion.Windows.Forms.Grid.GridListControl gridList;
         private System.Windows.Forms.ToolTip toolTip1;
